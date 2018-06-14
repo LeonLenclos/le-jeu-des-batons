@@ -1,0 +1,393 @@
+{
+	"evenements": {
+		"batons > 10" : ["OPEN perso 1"],
+		"chaussures > 2" : ["OPEN perso 2"],
+		"paires_de_chaussures = 1" : ["OPEN perso 3"],
+		"batons > 100" : ["OPEN perso 4"]
+	},
+	"perso" : [
+		{
+			"nom" : "Cou",
+			"idx" : 0,
+			"actif" : true,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Salut, Je me présente, je m'appelle Cou.</br>tu veux jouer ?",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 1,
+					"txt" : "Super ! Mon rôle est de te donner des bâtons</br>Tu veux un baton (c'est gratuit) ?",
+					"oui" : ["ADD 1 batons","GOTO 6"],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 2,
+					"txt" : "euh... t'es sûr ?",
+					"oui" : ["GAMEOVER Le joueur ne voulais pas jouer"],
+					"non" : ["GOTO 3"]
+				},
+				{
+					"idx" : 3,
+					"txt" : "Ok, je te donne une dernière chance.</br>Tu veux jouer ?",
+					"oui" : ["GOTO 1"],
+					"non" : ["GAMEOVER Le joueur ne voulais pas jouer"]
+				},
+				{
+					"idx" : 4,
+					"txt" : "Tu veux un bâton ?",
+					"oui" : ["ADD 1 batons","GOTO 6"],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 5,
+					"txt" : "Et maintenant tu veux un bâton ?",
+					"oui" : ["ADD 1 batons","GOTO 6"],
+					"non" : ["GOTO 7"]
+				},
+				{
+					"idx" : 6,
+					"txt" : "Encore un bâton ?",
+					"oui" : ["ADD 1 batons","GOTO 4"],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 7,
+					"txt" : "Je ne te comprends pas... Tu aime les bâtons au moins ?",
+					"oui" : ["GOTO 4"],
+					"non" : ["GOTO 8"]
+				},
+				{
+					"idx" : 8,
+					"txt" : "Dans ce cas, je pense que tu devrai jouer à un autre jeu. Ok ?",
+					"oui" : ["GOTO 2"],
+					"non" : ["GOTO 3"]
+				}
+			]
+		},
+		{
+			"nom" : "Riou",
+			"idx" : 1,
+			"actif" : false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Salut moi c'est Riou</br>Tu as beaucoup de bâtons !</br>Tu m'en échange 10 contre une chaussure ?",
+					"oui" : ["SUB 10 batons","ADD 1 chaussures","GOTO 1"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 1,
+					"txt" : "Tu as des bâton, j'ai des chaussures,</br>en veux tu une contre 10 bâtons ?",
+					"oui" : ["SUB 10 batons","ADD 1 chaussures","GOTO 3"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 2,
+					"txt" : "Ok, dans ce cas : ciao-bye-bye !</br>À moins que tu n'ai changé d'avis ?",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 4"]
+				},
+				{
+					"idx" : 3,
+					"txt" : "Veux-tu une de mes chaussure contre 10 de tes bâtons ?",
+					"oui" : ["SUB 10 batons","ADD 1 chaussures","GOTO 1"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 4,
+					"txt" : "Ok, dans ce cas : arrivederci-mon-ami !</br>À moins que tu n'ai changé d'avis ?",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 2"]
+				}
+			]
+		},
+		{
+			"nom" : "Pilili",
+			"idx" : 2,
+			"actif" : false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Coucou ! je suis Pilili !</br>Ça va ?",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 1,
+					"txt" : "Coooool ! Moi je suis un peu une magicienne</br>Tu veux voir un tour de magie ?",
+					"oui" : ["SUB 2 chaussures","ADD 1 paires_de_chaussures","GOTO 3"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 2,
+					"txt" : "Ah bon ? pourquoi ?",
+					"oui" : ["GOTO 4"],
+					"non" : ["GOTO 4"]
+				},
+				{
+					"idx" : 3,
+					"txt" : "Tadaam ! J'ai transformé deux de tes chaussures en une paire de chaussure ! Tu veux revoir ?",
+					"oui" : ["GOTO 5"],
+					"non" : ["GOTO 6"]
+				},
+				{
+					"idx" : 4,
+					"txt" : "Oups, je suis vraiment désolé, j'avais oublié que tu ne pouvais répondre que oui ou non...</br>Veux-tu un tour de magie pour me faire pardonner ma maladresse ?",
+					"oui" : ["SUB 2 chaussures","ADD 1 paires_de_chaussures","GOTO 3"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 5,
+					"txt" : "Malheureusement un magicien ne fait jamais deux fois le même tour.</br>Tu voulais vraiment le revoir ?",
+					"oui" : ["GOTO 7"],
+					"non" : ["GOTO 8"]
+				},
+				{
+					"idx" : 6,
+					"txt" : "Tu es sûr que tu ne veux pas revoir</br>le tour de la paire de chaussure ?",
+					"oui" : ["GOTO 8"],
+					"non" : ["GOTO 7"]
+				},
+				{
+					"idx" : 7,
+					"txt" : "Quoi que tu dise je ne pourrai pas le refaire, désolé... Tu es frustré ?",
+					"oui" : ["GOTO 5"],
+					"non" : ["GOTO 8"]
+				},
+				{
+					"idx" : 8,
+					"txt" : "Ça tombe bien, un magicien ne fais jamais deux fois le même tour. Tu as trouvé ça bien au moins ?",
+					"oui" : ["GOTO 5"],
+					"non" : ["GOTO 7"]
+				},
+				{
+					"idx" : 9,
+					"txt" : "Tiens donc couraj court partout maintenant !",
+					"oui" : ["GOTO 10"],
+					"non" : ["GOTO 11"]
+				},
+				{
+					"idx" : 10,
+					"txt" : "Je trouves ça super de voir quelqu'un courrir avec autant d'aisence et d'endurence. Mais ce serai bien qu'il puisse aller un peu plus vite.",
+					"oui" : ["GOTO 12"],
+					"non" : ["GOTO 13"]
+				},
+				{
+					"idx" : 11,
+					"txt" : "Tu as raison. On ne peut pas vraiment dire qu'il court vu comme il est lent.<br/>Ce serai bien qu'il soit plus rapide n'est-ce pas ?",
+					"oui" : ["GOTO 12"],
+					"non" : ["GOTO 13"]
+				},
+				{
+					"idx" : 12,
+					"txt" : "Donne-moi trois boîtes en carton et une chaussure et je veux bien faire un tour de magie pour qu'il court 2 fois plus vite.",
+					"oui" : ["SUB 3 boites_en_carton", "SUB 1 chaussures", "GOTO 16"],
+					"non" : ["GOTO 13"]
+				},
+				{
+					"idx" : 13,
+					"txt" : "Tu as le droit de penser que Couraj court assez vite comme ça. Mais souviens-toi que plus il court vite plus il t'amènera de bâtons. Tu veux plus de bâtons ?",
+					"oui" : ["GOTO 12"],
+					"non" : ["GOTO 14"]
+				},
+				{
+					"idx" : 14,
+					"txt" : "Tu veux quoi si tu veux pas de bâtons ? Tu veux que je te tue de sang froid ?",
+					"oui" : ["GAMEOVER Le joueur est mort, tué de sang foid."],
+					"non" : ["GOTO 15"]
+				},
+				{
+					"idx" : 15,
+					"txt" : "Tu veux que Couraj court plus vite ?",
+					"oui" : ["GOTO 12"],
+					"non" : ["GOTO 13"]
+				},
+				{
+					"idx" : 16,
+					"txt" : "Ah ! C'est beaucoup mieux ! Mais je pense qu'il faudrait qu'il aille encore plus vite !",
+					"oui" : ["GOTO 12"],
+					"non" : ["GOTO 13"]
+				}
+			]
+		},
+
+		{
+			"nom" : "Couraj",
+			"idx" : 3,
+			"actif" : false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Coucou ! Je suis Couraj, tu aime courir ?",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 1"]
+				},
+				{
+					"idx" : 1,
+					"txt" : "Moi j'adore courir. Mais je n'ai pas de paire de chaussures... Tu aimes les chaussures ?",
+					"oui" : ["GOTO 2"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 2,
+					"txt" : "Moi j'adore les chaussures. Je vois que tu as une paire de chaussures ici, je te  peux te les prendre ?",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO 4"]
+				},
+				{
+					"idx" : 3,
+					"txt" : "Merci beaucoup ! Pour te remercier, je te ramenerai tous les batons que je trouverai par terre ! Ok ?",
+					"oui" : ["GOTO 3","SUB 1 paires_de_chaussures", "OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 2"],
+					"non" : ["GOTO 6"]
+				},
+				{
+					"idx" : 4,
+					"txt" : "Je ne peux pas courir sans paire de chaussures. Et si je ne peux pas courir je suis personne ! Donne les moi s'il te plait !",
+					"oui" : ["GOTO 3","SUB 1 paires_de_chaussures", "OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 2"],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 5,
+					"txt" : "AAAAH ! Mais tu vois bien que je souffre le martyr de ne pouvoir courir partout !",
+					"oui" : ["GOTO 4"],
+					"non" : ["GOTO 8"]
+				},
+				{
+					"idx" : 6,
+					"txt" : "J'insiste, tu as été très généreux et je veux te remercier en te donnant des bâtons. Ok ?",
+					"oui" : ["OPEN cycle 0"],
+					"non" : ["GOTO 7"]
+				},
+				{
+					"idx" : 7,
+					"txt" : "J'insiste, c'est la moindre des choses pour moi de te ramener un petit bâton de temps en temps ! Ok ?",
+					"oui" : ["OPEN cycle 0"],
+					"non" : ["GOTO 6"]
+				},
+				{
+					"idx" : 8,
+					"txt" : "Comment fais-tu pour ne pas voir ça ? Es-tu aveugle ?",
+					"oui" : ["GOTO 9"],
+					"non" : ["GOTO 10"]
+				},
+				{
+					"idx" : 9,
+					"txt" : "Désolé, je ne savais pas que tu était aveugle... Si tu me donne ta paire de chaussure, je demanderai à Pilili de te rendre la vue ! Ok ?",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO 11"]
+				},
+				{
+					"idx" : 10,
+					"txt" : "As-tu un cœur ?!",
+					"oui" : ["GOTO 11"],
+					"non" : ["GAMEOVER Le joueur n'avait pas de cœur"]
+				},
+				{
+					"idx" : 11,
+					"txt" : "S'iiiiiil teeeeee plaaaaaait ! Donne moi ta paire de chaussures !",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO 12"]
+				},
+				{
+					"idx" : 12,
+					"txt" : "AAAAAAAAAAAH ! tu es horrible !",
+					"oui" : ["GOTO 10"],
+					"non" : ["GOTO 11"]
+				}
+
+			]
+		},
+		{
+			"nom" : "Lili",
+			"idx" : 4,
+			"actif" : false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Bonjour. Tu veux un citron ?",
+					"oui" : ["GOTO 1", "ADD 1 citrons"],
+					"non" : ["GOTO 1"]
+				},
+				{
+					"idx" : 1,
+					"txt" : "Tu veux un carton ?",
+					"oui" : ["GOTO 4"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 2,
+					"txt" : "Tu veux dix cartons ?",
+					"oui" : ["GOTO 5"],
+					"non" : ["GOTO 3"]
+				},
+				{
+					"idx" : 3,
+					"txt" : "Tu veux cents cartons ?",
+					"oui" : ["GOTO 6"],
+					"non" : ["GOTO 1"]
+				},
+				{
+					"idx" : 4,
+					"txt" : "Je t'échange 200 bâtons contre un carton.",
+					"oui" : ["SUB 200 batons", "ADD 1 boites_en_carton"],
+					"non" : ["GOTO 7"]
+				},
+				{
+					"idx" : 5,
+					"txt" : "Je t'échange 1500 bâtons contre dix cartons.",
+					"oui" : ["SUB 1500 batons", "ADD 10 boites_en_carton"],
+					"non" : ["GOTO 7"]
+				},
+				{
+					"idx" : 6,
+					"txt" : "Je t'échange 10000 bâtons contre cents cartons. C'est une affaire en or !",
+					"oui" : ["SUB 10000 batons"," ADD 100 boites_en_carton"],
+					"non" : ["GOTO 7"]
+				},
+				{
+					"idx" : 7,
+					"txt" : "Tu trouves ça trop cher ?",
+					"oui" : ["GOTO 8"],
+					"non" : ["GOTO 9"]
+				},
+				{
+					"idx" : 8,
+					"txt" : "Je ne connais personnes dans la galaxie qui échanges ses cartons à un meilleur prix. Toi tu en connais ?",
+					"oui" : ["GOTO 10"],
+					"non" : ["GOTO "]
+				},
+				{
+					"idx" : 9,
+					"txt" : "Alors tu trouves que c'est un bon prix mais tu trouves mes cartons trop moches.",
+					"oui" : ["GOTO "],
+					"non" : ["GOTO 1"]
+				},
+				{
+					"idx" : 10,
+					"txt" : "Tu me la présentera !<br/>En attendant ça te dirai qu'on échange des cartons contre des bâtons tous les deux ?",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO "]
+				}
+
+			]
+		}
+
+	],
+	"cycle" : [
+		{
+			"idx" : 0,
+			"actif":false,
+			"txt" : "Couraj court et dès qu'il trouve un bâton il te le ramène",
+			"duree" : 10,
+			"action": ["ADD 1 batons"]
+		}
+	]
+}

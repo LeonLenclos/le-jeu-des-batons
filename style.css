@@ -1,0 +1,69 @@
+p	{
+
+}
+
+body {
+	font-family: "Helvetica";
+	background : #ccc ;
+	font-size: 12px;
+}
+
+.bloc{
+	border: 1px solid black;
+	margin:5px;
+	background: #fff
+}
+.perso {
+
+}
+.content {
+	background-repeat: no-repeat;
+	padding-left: 60px;
+	width: 100%;
+	overflow: hidden;
+}
+.content p {
+	display: block;
+	padding: 5px;
+	margin:0px;
+	width:400px;
+	height: 50px;
+}
+.choices, .progress-bar{
+	width: 100%;
+	height: 17px;
+	border-top: 1px solid black;
+}
+.choices :first-child{
+	border-right: 1px solid black;
+	margin-right: -1px;
+}
+.button {
+	display: inline-block;
+	width: 50%;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	text-transform: lowercase;
+}
+.button:hover{
+	text-transform:uppercase;
+}
+#ressources {
+	display: flex;
+}
+.ressource {
+	align-self: center;
+	margin:5px;
+	padding-left: 25px;
+	height : 20px;
+	background-repeat: no-repeat;
+}
+
+.progress{
+	background-color: #bbb;
+	height: 100%;
+}
+.impossible{
+	text-decoration:line-through;
+}
