@@ -1,37 +1,56 @@
-p	{
-
-}
 
 body {
 	font-family: "Helvetica";
 	background : #ccc ;
-	font-size: 12px;
+	font-size: 14px;
+	max-width: 600px;
+	margin:auto;
 }
 
-.bloc{
+/****************************************/
+/*                BLOCS                 */
+/****************************************/
+
+.bloc {
 	border: 1px solid black;
 	margin:5px;
-	background: #fff
+	background: #fff;
 }
-.perso {
 
-}
 .content {
 	background-repeat: no-repeat;
+background-position: bottom left;
 	padding-left: 60px;
-	width: 100%;
+	width: auto;
 	overflow: hidden;
 }
 .content p {
 	display: block;
 	padding: 5px;
 	margin:0px;
-	width:400px;
-	height: 50px;
+	width: auto;
+	min-height: 50px;
 }
+
+
+/****************************************/
+/*                TITRE                 */
+/****************************************/
+
+h1 {
+	font-size: 14px;
+	margin:0;
+	padding: 5px;
+
+}
+
+/****************************************/
+/*                CHOIX  ET CYCLES     */
+/****************************************/
+
 .choices, .progress-bar{
 	width: 100%;
-	height: 17px;
+	min-height: 20px;
 	border-top: 1px solid black;
 }
 .choices :first-child{
@@ -49,6 +68,19 @@ body {
 .button:hover{
 	text-transform:uppercase;
 }
+.impossible{
+	text-decoration:line-through;
+}
+
+.progress{
+	background-color: #bbb;
+	height: 20px;
+}
+
+/****************************************/
+/*              RESSOURCES              */
+/****************************************/
+
 #ressources {
 	display: flex;
 }
@@ -58,12 +90,4 @@ body {
 	padding-left: 25px;
 	height : 20px;
 	background-repeat: no-repeat;
-}
-
-.progress{
-	background-color: #bbb;
-	height: 100%;
-}
-.impossible{
-	text-decoration:line-through;
 }
