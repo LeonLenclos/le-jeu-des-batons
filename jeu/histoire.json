@@ -3,7 +3,8 @@
 		"batons > 10" : ["OPEN perso 1"],
 		"chaussures > 2" : ["OPEN perso 2"],
 		"paires_de_chaussures = 1" : ["OPEN perso 3"],
-		"batons > 100" : ["OPEN perso 4"]
+		"batons > 100" : ["OPEN perso 4"],
+		"citrons > 0" : ["OPEN perso 5"]
 	},
 	"perso" : [
 		{
@@ -175,25 +176,25 @@
 				{
 					"idx" : 10,
 					"txt" : "Je trouves ça super de voir quelqu'un courrir avec autant d'aisence et d'endurence. Mais ce serai bien qu'il puisse aller un peu plus vite.",
-					"oui" : ["GOTO 12"],
+					"oui" : ["GOTO 12", "OPEN perso 4"],
 					"non" : ["GOTO 13"]
 				},
 				{
 					"idx" : 11,
 					"txt" : "Tu as raison. On ne peut pas vraiment dire qu'il court vu comme il est lent.<br/>Ce serai bien qu'il soit plus rapide n'est-ce pas ?",
-					"oui" : ["GOTO 12"],
+					"oui" : ["GOTO 12", "OPEN perso 4"],
 					"non" : ["GOTO 13"]
 				},
 				{
 					"idx" : 12,
 					"txt" : "Donne-moi trois boîtes en carton et une chaussure et je veux bien faire un tour de magie pour qu'il court 2 fois plus vite.",
-					"oui" : ["SUB 3 boites_en_carton", "SUB 1 chaussures", "GOTO 16"],
+					"oui" : ["SUB 3 boites_en_carton", "SUB 1 chaussures", "MULT cycle 0 duree 0.5", "GOTO 16"],
 					"non" : ["GOTO 13"]
 				},
 				{
 					"idx" : 13,
 					"txt" : "Tu as le droit de penser que Couraj court assez vite comme ça. Mais souviens-toi que plus il court vite plus il t'amènera de bâtons. Tu veux plus de bâtons ?",
-					"oui" : ["GOTO 12"],
+					"oui" : ["GOTO 12", "OPEN perso 4"],
 					"non" : ["GOTO 14"]
 				},
 				{
@@ -205,13 +206,13 @@
 				{
 					"idx" : 15,
 					"txt" : "Tu veux que Couraj court plus vite ?",
-					"oui" : ["GOTO 12"],
+					"oui" : ["GOTO 12", "OPEN perso 4"],
 					"non" : ["GOTO 13"]
 				},
 				{
 					"idx" : 16,
 					"txt" : "Ah ! C'est beaucoup mieux ! Mais je pense qu'il faudrait qu'il aille encore plus vite !",
-					"oui" : ["GOTO 12"],
+					"oui" : ["GOTO 12", "OPEN perso 4"],
 					"non" : ["GOTO 13"]
 				}
 			]
@@ -362,21 +363,236 @@
 					"idx" : 8,
 					"txt" : "Je ne connais personnes dans la galaxie qui échanges ses cartons à un meilleur prix. Toi tu en connais ?",
 					"oui" : ["GOTO 10"],
-					"non" : ["GOTO "]
+					"non" : ["GOTO 11"]
 				},
 				{
 					"idx" : 9,
 					"txt" : "Alors tu trouves que c'est un bon prix mais tu trouves mes cartons trop moches.",
-					"oui" : ["GOTO "],
+					"oui" : ["GOTO 11"],
 					"non" : ["GOTO 1"]
 				},
 				{
 					"idx" : 10,
 					"txt" : "Tu me la présentera !<br/>En attendant ça te dirai qu'on échange des cartons contre des bâtons tous les deux ?",
 					"oui" : ["GOTO 3"],
-					"non" : ["GOTO "]
+					"non" : ["GOTO 11"]
+				},
+				{
+					"idx" : 11,
+					"txt" : "Qu'importe ?... Après tout mon rôle ce n'est que de t'échanger des boites en carton. Si tu n'en veut pas, je ne sais pas pourquoi on discute.",
+					"oui" : ["GOTO 12"],
+					"non" : ["GOTO 12"]
+				},
+				{
+					"idx" : 12,
+					"txt" : "Tu as changé d'avis ?",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 11"]
 				}
+			]
+		},
+		{
+			"nom" : "Dieu",
+			"idx" : 5,
+			"actif" : false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Bonjour. Je suis dieu.",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 1,
+					"txt" : "Je te propose de faire un échage divin avec moi.",
+					"oui" : ["GOTO 30"],
+					"non" : ["GOTO 7"]
 
+				},
+				{
+					"idx" : 2,
+					"txt" : "Tu ne me crois pas ?",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO 4"]
+				},
+				{
+					"idx" : 3,
+					"txt" : "Comment ça oui ? Oui c'est vrai de dire que tu ne me crois pas ? Soit plus clair.",
+					"oui" : ["GOTO 5"],
+					"non" : ["GOTO 5"]
+
+				},
+				{
+					"idx" : 4,
+					"txt" : "Comment ça non ? Non tu ne me crois pas ? Soit plus clair.",
+					"oui" : ["GOTO 5"],
+					"non" : ["GOTO 5"]
+
+				},
+				{
+					"idx" : 5,
+					"txt" : "Hm...<br/>De quoi on parlait déjà ? Ah oui. On disait que moi j'étais Dieu. et tu n'était pas d'accord avec ça.",
+					"oui" : ["GOTO 6"],
+					"non" : ["GOTO 6"]
+
+				},
+				{
+					"idx" : 6,
+					"txt" : "Pour te prouver que je suis Dieu, je te proposes de faire un échange divin. Tu veux bien essayer ?",
+					"oui" : ["GOTO 30"],
+					"non" : ["GOTO 7"]
+				},
+				{
+					"idx" : 7,
+					"txt" : "C'est la première fois qu'un mortel refuse de faire un échange divin avec Dieu...",
+					"oui" : ["GOTO 8"],
+					"non" : ["GOTO 9"]
+				},
+				{
+					"idx" : 8,
+					"txt" : "Tu restera dans l'histoire telle que 'La personne qui a refusé de faire un échange divin avec dieu'. Dans 1000 ans tout le monde parlera encore de toi.",
+					"oui" : ["GOTO 11"],
+					"non" : ["GOTO 10"]
+				},
+				{
+					"idx" : 9,
+					"txt" : "Bon. Peut-être pas tout à fait la première fois. Mais une des premières fois c'est sûr.",
+					"oui" : ["GOTO 8"],
+					"non" : ["GOTO 10"]
+				},
+				{
+					"idx" : 10,
+					"txt" : "Dis-donc ! Tu es vraiment insolent avec Dieu.",
+					"oui" : ["GOTO 11"],
+					"non" : ["GOTO 12"]
+				},
+				{
+					"idx" : 11,
+					"txt" : "Je t'aime bien tu sais...",
+					"oui" : ["GOTO 13"],
+					"non" : ["GOTO 12"]
+				},
+				{
+					"idx" : 12,
+					"txt" : "Si je te le dis !",
+					"oui" : ["GOTO 13"],
+					"non" : ["GOTO 10"]
+				},
+				{
+					"idx" : 13,
+					"txt" : "Allez ! Faisons ce fichu échange divin ok ?",
+					"oui" : ["GOTO 30"],
+					"non" : ["GOTO 14"]
+				},
+				{
+					"idx" : 14,
+					"txt" : "AAAH ! Tu me pousses vraiment dans mes retranchements là.",
+					"oui" : ["GOTO 15"],
+					"non" : ["GOTO 15"]
+				},
+				{
+					"idx" : 15,
+					"txt" : "Tu cherches à me coincer.",
+					"oui" : ["GOTO 16"],
+					"non" : ["GOTO 17"]
+				},
+				{
+					"idx" : 16,
+					"txt" : "Ok, puisque que tu es joueur, on va jouer.",
+					"oui" : ["GOTO 19"],
+					"non" : ["GOTO 18"]
+				},
+				{
+					"idx" : 17,
+					"txt" : "Alors quoi ? Tu es juste curieux de voir comment je vais réagir c'est ça ? Jusqu'où je peux aller ?",
+					"oui" : ["GOTO 16"],
+					"non" : ["GOTO 16"]
+				},
+				{
+					"idx" : 18,
+					"txt" : "Tu n'as pas le choix. Personne ne peux s'opposer à la volonté de Dieu",
+					"oui" : ["GOTO 19"],
+					"non" : ["GOTO 19"]
+				},
+				{
+					"idx" : 19,
+					"txt" : "Je vais prononcer 7 phrases. Tu diras 'oui' à chaque phrase vraie et 'non' à chaque phrase fausse.<br/>Si tu te trompes une seule fois, tu disparaît de ce monde.",
+					"oui" : ["GOTO 20"],
+					"non" : ["GOTO 18"]
+				},
+				{
+					"idx" : 20,
+					"txt" : "1. Le Grand Mur de Sloan est plus long qu'il est loin",
+					"oui" : ["GOTO 21"],
+					"non" : ["GAMEOVER Le joueur a perdu au jeu de dieu."]
+				},
+				{
+					"idx" : 21,
+					"txt" : "2. Le Roi de Ooo se déplace en zeppelin",
+					"oui" : ["GOTO 22"],
+					"non" : ["GAMEOVER Le joueur a perdu au jeu de dieu."]
+				},
+				{
+					"idx" : 22,
+					"txt" : "3. Le Kaio du Nord vit sur une planette où la pesanteur est 100 fois supérieure à celle de la Terre.",
+					"oui" : ["GAMEOVER Le joueur a perdu au jeu de dieu."],
+					"non" : ["GOTO 23"]
+				},
+				{
+					"idx" : 23,
+					"txt" : "4. Manéthon mentionne Ouserkarê.",
+					"oui" : ["GAMEOVER Le joueur a perdu au jeu de dieu."],
+					"non" : ["GOTO 24"]
+				},
+				{
+					"idx" : 24,
+					"txt" : "5. Avec Lucy dans le ciel, des diamants et des fleurs en cellophane rouges et bleues.",
+					"oui" : ["GAMEOVER Le joueur a perdu au jeu de dieu."],
+					"non" : ["GOTO 25"]
+				},
+				{
+					"idx" : 25,
+					"txt" : "6. Je suis Dieu.",
+					"oui" : ["GOTO 26"],
+					"non" : ["GAMEOVER Le joueur a perdu au jeu de dieu."]
+				},
+				{
+					"idx" : 26,
+					"txt" : "7. Tu va répondre oui à cette question.",
+					"oui" : ["GOTO 27", "ADD 1 diamants"],
+					"non" : ["GOTO 27", "ADD 1 diamants"]
+				},
+				{
+					"idx" : 27,
+					"txt" : "Bravo. Voilà un diamants pour te féliciter. Veux-tu faire un échange divin maintenant ?",
+					"oui" : ["GOTO 30"],
+					"non" : ["GOTO 28"]
+				},
+				{
+					"idx" : 28,
+					"txt" : "Et maintenant ? Tu veux en faire un ? ",
+					"oui" : ["GOTO 30"],
+					"non" : ["GOTO 29"]
+				},
+				{
+					"idx" : 29,
+					"txt" : "Et maintenant ? Un petit échange divin ?",
+					"oui" : ["GOTO 30"],
+					"non" : ["GOTO 28"]
+				},
+				{
+					"idx" : 30,
+					"txt" : "Voilà ce que je te proposes. Tu me donne un citron et en échange, moi je te donne 1000 citrons.</br>Veux tu faire cet échange divin ?",
+					"oui" : ["SUB 1 citrons", "ADD 1000 citrons", "GOTO 31"],
+					"non" : ["GOTO 29"]
+				},
+				{
+					"idx" : 31,
+					"txt" : "Sur ce, je m'en vais. Adieu !",
+					"oui" : ["CLOSE perso 5"],
+					"non" : ["CLOSE perso 5"]
+				}
 			]
 		}
 

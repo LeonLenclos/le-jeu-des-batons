@@ -224,6 +224,7 @@ function faire(actions, perso) {
 		else if (action == "GOTOWITH") gotowith(args);
 		else if (action == "SUB") sub(args);
 		else if (action == "ADD") add(args);
+		else if (action == "MULT") mult(args);
 		else if (action == "OPEN") open(args);
 		else if (action == "CLOSE") close(args);
 		else if (action == "GAMEOVER") gameover(args);
@@ -267,6 +268,14 @@ function faire(actions, perso) {
 		for (var i = 0; i < histoire[type].length; i++) {
 			if (histoire[type][i].idx == idx) histoire[type][i].actif = false;
 		}
+	}
+	function mult(args) {
+		var type = args.shift();
+		var idx = int(args.shift());
+		var attr = args.shift();
+		var multiplicateur = float(args.shift());
+		histoire[type][idx][attr] *= multiplicateur;
+		print(histoire[type][idx][attr] + "*=" + multiplicateur);
 	}
 	function gameover(args) {
 		for (var i = 0; i < histoire.perso.length; i++) {
