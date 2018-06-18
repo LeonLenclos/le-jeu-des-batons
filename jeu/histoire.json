@@ -4,7 +4,15 @@
 		"chaussures > 2" : ["OPEN perso 2"],
 		"paires_de_chaussures = 1" : ["OPEN perso 3"],
 		"batons > 100" : ["OPEN perso 4"],
-		"citrons > 0" : ["OPEN perso 5"]
+		"boites_en_carton > 1" : ["OPEN perso 5"],
+		"diamants > 0" : ["OPEN perso 6"],
+		"diamants < 1" : ["CLOSE perso 6"],
+		"citrons > 999" : ["OPEN perso 7"],
+		"citrons > 1000" : ["OPEN perso 8"],
+		"citrons > 10000" : ["GAMEOVER Le joueur est mort par overdose d'acide citrique."],
+		"cycle 0 duree < 2" : ["CLOSE cycle 0", "OPEN perso 3", "GOTOWITH 1 cycle 0", "GOTOWITH 13 perso 3", "GOTOWITH 17 perso 2"],
+		"cycle 0 duree < 1" : ["CLOSE cycle 0","CLOSE cycle 1","CLOSE perso 0","CLOSE perso 1","CLOSE perso 2","CLOSE perso 3","CLOSE perso 4","CLOSE perso 5","CLOSE perso 6","CLOSE perso 7","CLOSE perso 8","OPEN perso 9"]
+
 	},
 	"perso" : [
 		{
@@ -66,6 +74,42 @@
 					"txt" : "Dans ce cas, je pense que tu devrai jouer à un autre jeu. Ok ?",
 					"oui" : ["GOTO 2"],
 					"non" : ["GOTO 3"]
+				},
+				{
+					"idx" : 9,
+					"txt" : "Oh mon dieu ! C'est horrible, tu as appris que Couraj est mort ?",
+					"oui" : ["GOTO 10"],
+					"non" : ["GOTO 10"]
+				},
+				{
+					"idx" : 10,
+					"txt" : "Il est mort en courant. Parcequ'il courrait trop vite. Quelle horreur n'est-ce pas ?",
+					"oui" : ["GOTO 11"],
+					"non" : ["GOTO 12"]
+				},
+				{
+					"idx" : 11,
+					"txt" : "Ça me donne envie d'arrêter ce jeu. Toi aussi ?",
+					"oui" : ["GAMEOVER Le joueur ne voulais pas jouer"],
+					"non" : ["GOTO 14"]
+				},
+				{
+					"idx" : 12,
+					"txt" : "Bon sang mais tu es affreux !",
+					"oui" : ["GOTO 13"],
+					"non" : ["GOTO 13"]
+				},
+				{
+					"idx" : 13,
+					"txt" : "Tu veux un bâton monsieur l'affreux ?",
+					"oui" : ["GOTO 6", "ADD 1 batons"],
+					"non" : ["GOTO 8"]
+				},
+				{
+					"idx" : 14,
+					"txt" : "Moi je m'en vais. J'arrête ce jeu horrible",
+					"oui" : ["CLOSE perso 0"],
+					"non" : ["CLOSE perso 0"]
 				}
 			]
 		},
@@ -103,7 +147,37 @@
 					"idx" : 4,
 					"txt" : "Ok, dans ce cas : arrivederci-mon-ami !</br>À moins que tu n'ai changé d'avis ?",
 					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 5,
+					"txt" : "Ok, dans ce cas : adios amigos !</br>À moins que tu n'ai changé d'avis ?",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 6"]
+				},
+				{
+					"idx" : 6,
+					"txt" : "Ok, dans ce cas : tu veux faire un ping-pong ?",
+					"oui" : ["GOTO 7"],
 					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 7,
+					"txt" : "Je t'envois la balle.",
+					"oui" : ["GOTO 8", "ADD 1 balles_de_ping_pong"],
+					"non" : ["GOTO 9"]
+				},
+				{
+					"idx" : 8,
+					"txt" : "Tu m'envois la balle",
+					"oui" : ["GOTO 7", "SUB 1 balles_de_ping_pong"],
+					"non" : ["GOTO 9"]
+				},
+				{
+					"idx" : 9,
+					"txt" : "Tu veux arrêter de jouer ?",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO 7"]
 				}
 			]
 		},
@@ -214,6 +288,30 @@
 					"txt" : "Ah ! C'est beaucoup mieux ! Mais je pense qu'il faudrait qu'il aille encore plus vite !",
 					"oui" : ["GOTO 12", "OPEN perso 4"],
 					"non" : ["GOTO 13"]
+				},
+				{
+					"idx" : 17,
+					"txt" : "Tiens donc. Couraj ne court plus !! Dépèche toi de le convaincre de courir à nouveau !",
+					"oui" : ["GOTO 18"],
+					"non" : ["GOTO 19"]
+				},
+				{
+					"idx" : 18,
+					"txt" : "Qu'est ce que tu fait encore là ? Va dire à Couraj de courir !",
+					"oui" : ["GOTO 19"],
+					"non" : ["GOTO 19"]
+				},
+				{
+					"idx" : 19,
+					"txt" : "Il faut absolument que Couraj court !",
+					"oui" : ["GOTO 18"],
+					"non" : ["GOTO 18"]
+				},
+				{
+					"idx" : 20,
+					"txt" : "Oh ! Couraj est mort ! Mince alors... Euh... Je vais partir moi maintenant...",
+					"oui" : ["CLOSE perso 2"],
+					"non" : ["CLOSE perso 2"]
 				}
 			]
 		},
@@ -245,13 +343,13 @@
 				{
 					"idx" : 3,
 					"txt" : "Merci beaucoup ! Pour te remercier, je te ramenerai tous les batons que je trouverai par terre ! Ok ?",
-					"oui" : ["GOTO 3","SUB 1 paires_de_chaussures", "OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 2"],
+					"oui" : ["GOTO 3","SUB 1 paires_de_chaussures", "OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 perso 2"],
 					"non" : ["GOTO 6"]
 				},
 				{
 					"idx" : 4,
 					"txt" : "Je ne peux pas courir sans paire de chaussures. Et si je ne peux pas courir je suis personne ! Donne les moi s'il te plait !",
-					"oui" : ["GOTO 3","SUB 1 paires_de_chaussures", "OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 2"],
+					"oui" : ["GOTO 3","SUB 1 paires_de_chaussures", "OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 perso 2"],
 					"non" : ["GOTO 5"]
 				},
 				{
@@ -301,6 +399,24 @@
 					"txt" : "AAAAAAAAAAAH ! tu es horrible !",
 					"oui" : ["GOTO 10"],
 					"non" : ["GOTO 11"]
+				},
+				{
+					"idx" : 13,
+					"txt" : "Ouf ! Je suis épuisé. Je pense qu'il ne faut pas que je cours aussi vite sinon je vais mourir.<br/>Tu veux bien que je fasse une pause ?",
+					"oui" : ["GOTO 14"],
+					"non" : ["GOTO 15"]
+				},
+				{
+					"idx" : 14,
+					"txt" : "J'ai une idée. Tu serai d'accord pour que je cours 100 fois moins vite mais que je te ramène 100 bâtons à chaque fois au lieu d'un seul ?",
+					"oui" : ["CLOSE perso 3", "OPEN cycle 0", "GOTOWITH 9 perso 2"],
+					"non" : ["GOTO 15"]
+				},
+				{
+					"idx" : 15,
+					"txt" : "Bon... Dans ce cas j'y retourne...",
+					"oui" : ["CLOSE perso 3", "GOTOWITH 9 perso 0", "GOTOWITH 20 perso 2"],
+					"non" : ["GOTO 14"]
 				}
 
 			]
@@ -350,7 +466,7 @@
 				{
 					"idx" : 6,
 					"txt" : "Je t'échange 10000 bâtons contre cents cartons. C'est une affaire en or !",
-					"oui" : ["SUB 10000 batons"," ADD 100 boites_en_carton"],
+					"oui" : ["SUB 10000 batons","ADD 100 boites_en_carton"],
 					"non" : ["GOTO 7"]
 				},
 				{
@@ -594,16 +710,241 @@
 					"non" : ["CLOSE perso 5"]
 				}
 			]
+		},
+		{
+			"nom" : "Clop",
+			"idx" : 6,
+			"actif" : false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Salut, je suis Clop le bandit. Donne moi ton diamant ou je te tue.",
+					"oui" : ["SUB 1 diamants", "CLOSE perso 6"],
+					"non" : ["GAMEOVER Le joueur a été tué par un bandit"]
+				}
+			]
+		},
+		{
+			"nom" : "K",
+			"idx" : 7,
+			"actif" : false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Bien de bonjour, je me présente, je m'appelle K. Toi je suppose que tu dois être Sylvain ?",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 1,
+					"txt" : "Bonjour Sylvain.<br/>J'ai entendu dire que tu avais plein de citrons.",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO 4"]
+				},
+				{
+					"idx" : 2,
+					"txt" : "Ah... Tant pis. On m'a parlé d'une personne qui avait plein de citrons. C'est bien toi ?",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO 4"]
+				},
+				{
+					"idx" : 3,
+					"txt" : "Voilà ce que je te propose, tu vas me passer 1000 citrons. Et moi je vais faire une citronade. Je filtrerai tous les pépins pour que la citronade soit plus agréable à boire. et je les planterai dans mon terrain. J'aurai comme ça un super champ de citronier ! Ce qui me permettera de faire encore plus de citronade. Aussi pour te remercier, je t'apporterai régulièrement des citrons de mon champs.",
+					"oui" : ["SUB 1000 citrons", "OPEN cycle 1", "CLOSE perso 7"],
+					"non" : ["GOTO 4"]
+				},
+				{
+					"idx" : 4,
+					"txt" : "Ah... Tant pis...",
+					"oui" : ["GOTO 6"],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 5,
+					"txt" : "Comment ça non ?",
+					"oui" : ["GOTO 9"],
+					"non" : ["GOTO 10"]
+				},
+				{
+					"idx" : 6,
+					"txt" : "C'est la vie...",
+					"oui" : ["GOTO 7"],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 7,
+					"txt" : "La vie est comme elle est...",
+					"oui" : ["GOTO 8"],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 8,
+					"txt" : "Tu veux boire un petit verre de citronade ? Attention c'est empoisonné.",
+					"oui" : ["GAMEOVER Le joueur est mort empoisonné."],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 9,
+					"txt" : "Oui ou non ?",
+					"oui" : ["GOTO 11"],
+					"non" : ["GOTO 10"]
+				},
+				{
+					"idx" : 10,
+					"txt" : "Non ?",
+					"oui" : ["GOTO 11"],
+					"non" : ["GOTO 12"]
+				},
+				{
+					"idx" : 11,
+					"txt" : "Je préfère le 'oui' au 'non' personnellement.",
+					"oui" : ["GOTO 12"],
+					"non" : ["GOTO 12"]
+				},
+				{
+					"idx" : 12,
+					"txt" : "Assez bavardé ! Faisons un échange.",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO 5"]
+				}
+			]
+		},
+		{
+			"nom" : "Anis",
+			"idx" : 8,
+			"actif" : false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Bonjour, moi c'est Anis. Je suis venu te parler de tes citrons. Tu sais que les citrons sont très acides.",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 2"]
+				},
+				{
+					"idx" : 1,
+					"txt" : "Tu sais que l'acidité peut être mortelle à trop forte dose.",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO 4"]
+				},
+				{
+					"idx" : 2,
+					"txt" : "Crois-moi, ils le sont. Et tu sais que l'acidité peut être mortelle à trop forte dose.",
+					"oui" : ["GOTO 3"],
+					"non" : ["GOTO 4"]
+				},
+				{
+					"idx" : 3,
+					"txt" : "Eh bien voilà. Je suis venu te prévenir que le jour ou tu aura 10000 citrons tu mourra par excès d'acidité. Esperons que ce jour n'arrive Jamais.",
+					"oui" : ["GOTO 5"],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 4,
+					"txt" : "Crois-moi, elle l'est. Je suis venu te prévenir que le jour ou tu aura 10000 citrons tu mourra par excès d'acidité. Esperons que ce jour n'arrive Jamais.",
+					"oui" : ["GOTO 5"],
+					"non" : ["GOTO 5"]
+				},
+				{
+					"idx" : 5,
+					"txt" : "Tu es prévenu !</br>Essaye de ne jamais avoir plus de 10000 citrons ou tu mourra.</br> Voilà... Tu as tout compris ?",
+					"oui" : ["GOTO 6"],
+					"non" : ["GOTO 7"]
+				},
+				{
+					"idx" : 6,
+					"txt" : "Oulah !! Désolé j'avais totalement oublié j'ai un rendez-vous super important ! je dois y aller !",
+					"oui" : ["CLOSE perso 8"],
+					"non" : ["CLOSE perso 8"]
+				}
+			]
+		},
+		{
+			"nom" : "Yom",
+			"idx" : 9,
+			"actif" : false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Bonsoir. Je suis Yom. J'ai du tuer tous tes amis. La situation est extrêment urgente et toi seul peut sauver l'unnivers.",
+					"oui" : ["GOTO 1"],
+					"non" : ["GOTO 1"]
+				},
+				{
+					"idx" : 1,
+					"txt" : "Comme tu le sais sûrement, il faut absolument construire un Sceptre Chronique pour dévier la trajectoire du rayon gamma qui va détruire l'unnivers dans 20 secondes si on ne fait rien !",
+					"oui" : ["GOTO 2", "OPEN cycle 2"],
+					"non" : ["GOTO 2", "OPEN cycle 2"]
+				},
+				{
+					"idx" : 2,
+					"txt" : "Pour construire le Sceptre il faut : Un bâton, une balle de ping-pong, un diamant divin (de Dieu) et environ 2000 citrons. <br/>Donne moi vite tout ça où l'unnivers sera détruit.",
+					"oui" : ["SUB 1 batons","SUB 1 balles_de_ping_pong","SUB 1 diamants", "SUB 2000 citrons", "WIN"],
+					"non" : ["GOTO 3"]
+				},
+				{
+					"idx" : 3,
+					"txt" : "Comment ça non ? Tu n'as pas tous les ingrédients ? Pourtant la prophétie disait que c'était toi, qu'on parlerait encore de toi dans 1000 ans. Que tu aurait réuni tous les ellements necessaires !",
+					"oui" : ["SUB 1 batons","SUB 1 balles_de_ping_pong","SUB 1 diamants", "SUB 2000 citrons", "WIN"],
+					"non" : ["GOTO 4"]
+				},
+				{
+					"idx" : 3,
+					"txt" : "L'unnivers va être détruit et on ne peut rien faire...",
+					"oui" : [],
+					"non" : []
+				}
+			]
 		}
-
 	],
 	"cycle" : [
 		{
 			"idx" : 0,
 			"actif":false,
-			"txt" : "Couraj court et dès qu'il trouve un bâton il te le ramène",
-			"duree" : 10,
-			"action": ["ADD 1 batons"]
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "Couraj court et dès qu'il trouve un bâton il te le ramène",
+					"duree" : 8,
+					"action": ["ADD 1 batons"]
+				},
+				{
+					"idx" : 1,
+					"txt" : "Couraj court et dès qu'il trouve cents bâtons il te les ramènes",
+					"duree" : 100,
+					"action": ["ADD 100 batons"]
+				}
+			]
+		},
+		{
+			"idx" : 1,
+			"actif":false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "K cultive des citrons il t'amène régulièrement des cartons de citrons (1 boite en carton et 100 citrons) ",
+					"duree" : 10,
+					"action": ["ADD 100 citrons", "ADD 1 boites_en_carton"]
+				}
+			]
+		},
+		{
+			"idx" : 2,
+			"actif":false,
+			"scenarIdx" : 0,
+			"scenar" : [
+				{
+					"idx" : 0,
+					"txt" : "L'unnivers va être détruit par le rayon gamma.",
+					"duree" : 20,
+					"action": ["GAMEOVER L'unnivers du joueur a été détruit."]
+				}
+			]
 		}
 	]
 }

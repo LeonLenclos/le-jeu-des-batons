@@ -136,10 +136,10 @@ function afficherCycle(cycle) {
 	// Variables
 	var actif = cycle.actif;
 	var temps = cycle.temps;
-	var duree = cycle.duree;
+	var duree = cycle.scenar[cycle.scenarIdx].duree;
 	var id = "cycle" + cycle.idx;
 	var imgCSS = "url('img/cycle/" + cycle.idx + ".png')";
-	var txtHTML = "<p>" + cycle.txt + "</p>";
+	var txtHTML = "<p>" + cycle.scenar[cycle.scenarIdx].txt + "</p>";
 
 	// containeur de personnages
 	var container = select("#cycle-container");
@@ -196,6 +196,19 @@ function afficherGameOver(msg){
 
 	bloc = createDiv("");
 	bloc.addClass("game-over");
+	bloc.addClass("bloc");
+
+	var content = createDiv(txtHTML);
+	content.addClass("content");
+	bloc.child(content);
+
+}
+function afficherVictoire(msg){
+	var txtHTML = "<img src='img/sceptre_chronique.png'/>Bravo ! Tu as gagné. Tu as permis à Yom de construire le sceptre chronique. Tu as sauvé l'unnivers. Tous les habitants de l'unnivers parlerons encore de toi dans 1000 ans.";
+
+	bloc = createDiv("");
+	bloc.addClass("victoire");
+	bloc.addClass("bloc");
 
 	var content = createDiv(txtHTML);
 	content.addClass("content");
@@ -236,10 +249,12 @@ function faire(actions, perso) {
 	}
 	function gotowith(args) {
 		var scenarIdx = args.shift();
+		var type = args.shift();
 		var persoIdx = args.shift();
 		for (var i = 0; i < histoire.perso.length; i++) {
-			if(histoire.perso[i].idx == persoIdx){
-				histoire.perso[i].scenarIdx = scenarIdx;
+			if(histoire[type][i].idx == persoIdx){
+				histoire[type][i].scenarIdx = scenarIdx;
+				break;
 			}
 		}
 	}
@@ -274,8 +289,7 @@ function faire(actions, perso) {
 		var idx = int(args.shift());
 		var attr = args.shift();
 		var multiplicateur = float(args.shift());
-		histoire[type][idx][attr] *= multiplicateur;
-		print(histoire[type][idx][attr] + "*=" + multiplicateur);
+		histoire[type][idx].scenar[histoire[type][idx].scenarIdx][attr] *= multiplicateur;
 	}
 	function gameover(args) {
 		for (var i = 0; i < histoire.perso.length; i++) {
@@ -286,21 +300,38 @@ function faire(actions, perso) {
 		}
 		afficherGameOver(args.join(" "))
 	}
+	function win(args) {
+		for (var i = 0; i < histoire.perso.length; i++) {
+			histoire.perso[i].actif = false;
+		}
+		for (var i = 0; i < histoire.cycle.length; i++) {
+			histoire.cycle[i].actif = false;
+		}
+		afficherVictoire()
+	}
 
 }
 
 function verifier(condition){
-	var condition = condition.split(" ")
-	var ressource = condition.shift()
-	var operateur = condition.shift()
-	var valeur = int(condition.shift())
 
-	if (operateur == ">") return ressources[ressource] > valeur
-	else if (operateur == ">=") return ressources[ressource] >= valeur
-	else if (operateur == "<") return ressources[ressource] < valeur
-	else if (operateur == "<=") return ressources[ressource] <= valeur
-	else if (operateur == "=") return ressources[ressource] == valeur
-	else return false
+	var condition = condition.split(" ");
+	var cle = condition.shift();
+
+	var valeur1 = null;
+	if (ressources[cle] !== undefined) valeur1 = ressources[cle];
+	else if (cle == "cycle"){
+		var cycle = histoire[cle][condition.shift()]
+		valeur1 = float(cycle.scenar[cycle.scenarIdx][condition.shift()]);
+	} else return null;
+	var operateur = condition.shift();
+	var valeur2 = float(condition.shift());
+
+	if (operateur == ">") return valeur1 > valeur2;
+	else if (operateur == ">=") return valeur1 >= valeur2;
+	else if (operateur == "<") return valeur1 < valeur2;
+	else if (operateur == "<=") return valeur1<= valeur2;
+	else if (operateur == "=") return valeur1 == valeur2;
+	else return null;
 }
 
 function evenements () {
@@ -308,10 +339,9 @@ function evenements () {
 	// Faire les actions correspondants aux conditions vérifiées.
 	for (var condition in histoire.evenements) {
 		if (histoire.evenements.hasOwnProperty(condition)) {
-
 			if (histoire.evenements[condition] && verifier(condition)) {
-				action = histoire.evenements[condition]
-				histoire.evenements[condition] = null
+				action = histoire.evenements[condition];
+				histoire.evenements[condition] = null;
 
 				faire(action);
 			}
@@ -326,11 +356,12 @@ function cycles() {
 		return function() {
 			if (! histoire.cycle[idx].actif){
 				clearInterval(histoire.cycle[idx].interval)
+				histoire.cycle[idx].interval = 0;
 			}
 			histoire.cycle[idx].temps += 1/fps;
-			if (histoire.cycle[idx].temps>=histoire.cycle[idx].duree){
+			if (histoire.cycle[idx].temps>=histoire.cycle[idx].scenar[histoire.cycle[idx].scenarIdx].duree){
 				histoire.cycle[idx].temps = 0;
-				faire(histoire.cycle[idx].action)
+				faire(histoire.cycle[idx].scenar[histoire.cycle[idx].scenarIdx].action)
 			}
 			afficherCycle(histoire.cycle[idx])
 		}
@@ -338,7 +369,7 @@ function cycles() {
 	}
 	for (var i = 0; i < histoire.cycle.length; i++) {
 		if(! histoire.cycle[i].interval && histoire.cycle[i].actif) {
-			histoire.cycle[i].temps = histoire.cycle[i].duree;
+			histoire.cycle[i].temps = 0;
 			histoire.cycle[i].interval = setInterval(faireProgress(i), 1000/fps);
 		}
 	}
