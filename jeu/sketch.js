@@ -1,47 +1,137 @@
-var histoire = {}; // from json
-var ressources = {}; // combien de ressources a le joueur
+// Le jeu des bâtons est un jeu de Léon Lenclos
+// Sont uttilisées les librairies p5.js et p5.dom.js
 
+
+////////////////////////////////////////////////////////////////////////////////
+//                                    Données                                 //
+////////////////////////////////////////////////////////////////////////////////
+
+// Dictionnaire construit à partir de histoire.json
+var histoire = {};
+ // Dictionnaire contenant les ressources dont dispose le joueur.
+var ressources = {};
+
+
+////////////////////////////////////////////////////////////////////////////////
+//                               Fonctions de base                            //
+////////////////////////////////////////////////////////////////////////////////
+
+// Fonction p5
 function preload () {
+	// Avant tout, chargement de l'histoire.
 	histoire = loadJSON('histoire.json');
 }
 
+// Fonction p5
 function setup() {
-	print("Le jeu des batons")
+	// Réglage liés à p5.
 	noCanvas();
 	noLoop();
+	// Première actualisation.
 	actualiser();
-
 }
 
+// Fonction principale du jeu
+// Doit être appelée à chaque fois que Les choses ont changés afin d'actualiser
+// ce qui est affichées et de verifier s'il y a des nouvelles choses à faire.
 function actualiser() {
 	evenements();
 	cycles();
+	afficher();
+}
 
+
+////////////////////////////////////////////////////////////////////////////////
+//                                    Affichage                               //
+////////////////////////////////////////////////////////////////////////////////
+
+// On affiche tout en HTML grace à p5.dom.js
+// La pege ressemblera à quelquechose comme ça :
+//
+// <div id="perso-container">
+//
+// 	<div class="bloc perso" id="perso0">
+// 		<div class="content" style="background-image: url("url/de/limage");">
+// 			<p>Texte</p>
+// 		</div>
+// 		<div class="choices">
+// 			<a href="#" class="button oui">Oui</a>
+// 			<a href="#" class="button non">Non</a>
+// 		</div>
+// 	</div>
+//
+// 	<div class="bloc perso" id="perso1">
+// 		<div class="content" style="background-image: url("url/de/limage");">
+// 			<p>Texte</p>
+// 		</div>
+// 		<div class="choices">
+// 			<a href="#" class="button oui">Oui</a>
+// 			<a href="#" class="button non">Non</a>
+// 		</div>
+// 	</div>
+//
+// </div>
+//
+// <div id="cycle-container">
+//
+// 	<div class="bloc cycle" id="cycle0">
+// 		<div class="content" style="background-image: url("url/de/limage");">
+// 			<p>Texte</p>
+// 		</div>
+// 		<div class="progress-bar">
+// 			<div class="progress" style="width: 96.75%;"></div>
+// 		</div>
+// 	</div>
+//
+// 	<div class="bloc cycle" id="cycle1">
+// 		<div class="content" style="background-image: url("url/de/limage");">
+// 			<p>Texte</p>
+// 		</div>
+// 		<div class="progress-bar">
+// 			<div class="progress" style="width: 96.75%;"></div>
+// 		</div>
+// 	</div>
+//
+// </div>
+//
+// <div class="bloc" id="ressources">
+// 	<div class="ressource" id="ressource-nom_de_la_ressource" style="background-image: url("url/de/limage");">Valeur</div>
+// 	<div class="ressource" id="ressource-nom_de_la_ressource" style="background-image: url("url/de/limage");">Valeur</div>
+// </div>
+
+// Affiche tous les ellements du jeu.
+function afficher() {
+	// Afficher les personnages.
 	for (var i = 0; i < histoire.perso.length; i++) {
 		afficherPerso(histoire.perso[i]);
 	}
+	// Afficher les cycles.
 	for (var i = 0; i < histoire.cycle.length; i++) {
 		afficherCycle(histoire.cycle[i]);
 	}
+	// Afficher les ressources.
 	for (var ressource in ressources) {
 		if (ressources.hasOwnProperty(ressource, ressources[ressource])) {
 			afficherRessource(ressource, ressources[ressource]);
 		}
 	}
-
 }
 
-// Affiche la ressource concernée s'il faut
+// Affiche la ressource concernée s'il faut.
 function afficherRessource(nom, quantite) {
+	// Récuperer le bloc #ressources ou le créer s'il n'existe pas.
 	var bloc = select("#ressources");
 	if(!bloc && quantite > 0){
 		bloc = createDiv("");
 		bloc.addClass("bloc");
 		bloc.id("ressources");
 	}
+	// Informations relatives à la ressource à afficher
 	var id="ressource-" + nom;;
 	var imgCSS = "url('img/" + nom + ".png')";
 	var txtHTML = quantite;
+	// Récupérer le bloc de la ressource à afficher, le créer s'il n'éxiste pas et
+	// que c'est necessaire
 	var blocRessource = select("#" + id);
 	if(!blocRessource && quantite > 0){
 		blocRessource = createDiv("");
@@ -50,7 +140,9 @@ function afficherRessource(nom, quantite) {
 		blocRessource.html(txtHTML)
 		blocRessource.style("background-image", imgCSS);
 		bloc.child(blocRessource);
-	} else if (blocRessource) {
+	}
+	// S'il existe déjà, se contenter de changer son contenu
+	else if (blocRessource) {
 		if(blocRessource.html() != txtHTML){
 			blocRessource.html(txtHTML)
 		}
@@ -60,34 +152,37 @@ function afficherRessource(nom, quantite) {
 // Afficher le bloc perso concerné s'il faut
 function afficherPerso(perso) {
 
-	// Variables
+	// Information relative au personnage à afficher
 	var actif = perso.actif;
 	var moment = perso.scenar[perso.scenarIdx];
 	var id = "perso" + perso.idx;
 	var imgCSS = "url('img/perso/" + perso.idx + ".png')";
 	var txtHTML = "<p>" + moment.txt + "</p>";
 
-	// containeur de personnages
+	// Récuperer #perso-container, le créer s'il n'éxiste pas.
 	var container = select("#perso-container");
 	if(!container) container = createDiv("").id("perso-container");
 
-	// Bloc et contenu
+	// Récupérer le bloc du personnage à afficher.
 	var bloc = select("#" + id);
+	// Le créer s'il n'éxiste pas et que c'est necessaire.
 	if (!bloc && actif) {
 		bloc = createDiv("");
 		bloc.addClass("bloc");
 		bloc.addClass("perso");
 		bloc.id(id)
-
+		// Ce bloc contient un div.content ou seront affichés le texte et l'image
 		var content = createDiv(txtHTML);
 		content.addClass("content");
 		content.style("background-image", imgCSS);
 		bloc.child(content);
 		container.child(bloc)
 	}
+	// Le supprimer si c'est necessaire.
 	else if (bloc && !actif) {
 		bloc.remove();
 	}
+	// Changer son contenu sinon.
 	else if (bloc){
 		var content = select('.content', bloc);
 		if (content.html() != txtHTML) {
@@ -95,27 +190,33 @@ function afficherPerso(perso) {
 		}
 	}
 
-	// Choix
+	// Le bloc du personnage contient aussi un div.choices ou sont affichés les
+	// boutons oui/non
 	if(bloc) {
+		// Cette fonction renvoie une fonction à appeller quand on clic sur un bouton
+		function faireFaire(moment, choix, perso) {
+			return function(e) {faire(moment[choix], perso);};
+		}
+
+		// Récupérer ce bloc, le supprimer s'il éxiste et en créer un nouveau
 		var choices = select(".choices", bloc)
 		if (choices) choices.remove()
 		choices = createDiv("");
 		choices.addClass("choices");
 
-		function faireFaire(moment, choix, perso) {
-			return function(e) {faire(moment[choix], perso);};
-		}
-
+		// Créer le bouton Oui
 		var oui = createA("#", "Oui");
 		oui.addClass("button");
 		oui.addClass("oui");
+		// Les bouton sont differents selon que les actions correspondantes sont
+		// posisbles ou pas.
 		if (peutFaire(moment.oui)) {
 			oui.mouseClicked(faireFaire(moment, 'oui', perso));
 		}
 		else {
 			oui.addClass("impossible");
 		}
-
+		// Créer le bouton Non
 		var non = createA("#", "Non");
 		non.addClass("button");
 		non.addClass("non");
@@ -132,8 +233,9 @@ function afficherPerso(perso) {
 	}
 }
 
+// Afficher le bloc cycle concerné s'il faut
 function afficherCycle(cycle) {
-	// Variables
+	// Information relative au cycle à afficher
 	var actif = cycle.actif;
 	var temps = cycle.temps;
 	var duree = cycle.scenar[cycle.scenarIdx].duree;
@@ -141,27 +243,30 @@ function afficherCycle(cycle) {
 	var imgCSS = "url('img/cycle/" + cycle.idx + ".png')";
 	var txtHTML = "<p>" + cycle.scenar[cycle.scenarIdx].txt + "</p>";
 
-	// containeur de personnages
+	// Récuperer #cycle-container, le créer s'il n'éxiste pas.
 	var container = select("#cycle-container");
 	if(!container) container = createDiv("").id("cycle-container");
 
-	// Bloc et contenu
+	// Récupérer le bloc du personnage à afficher.
 	var bloc = select("#" + id);
+	// Le créer s'il n'éxiste pas et que c'est necessaire.
 	if (!bloc && actif) {
 		bloc = createDiv("");
 		bloc.addClass("bloc");
 		bloc.addClass("cycle");
 		bloc.id(id)
-
+		// Ce bloc contient un div.content ou seront affichés le texte et l'image
 		var content = createDiv(txtHTML);
 		content.addClass("content");
 		content.style("background-image", imgCSS);
 		bloc.child(content);
 		container.child(bloc)
 	}
+	// Le supprimer si c'est necessaire.
 	else if (bloc && !actif) {
 		bloc.remove();
 	}
+	// Changer son contenu sinon.
 	else if (bloc){
 		var content = select('.content', bloc);
 		if (content.html() != txtHTML) {
@@ -169,7 +274,8 @@ function afficherCycle(cycle) {
 		}
 	}
 
-	// Temps
+	// Le bloc du cycle contient aussi un div.progress-bar ou est affichée la
+	// progression du cycle. Le récupérer et l'actualiser ou le créer.
 	if(bloc) {
 		var progressBar = select(".progress-bar", bloc);
 		var progress;
@@ -184,13 +290,13 @@ function afficherCycle(cycle) {
 			progressBar.child(progress);
 			bloc.child(progressBar);
 		}
-
 		pourcentage = temps/duree*100;
 		pourcentage += "%";
 		progress.style("width", pourcentage);
 	}
-
 }
+
+// Afficher le bloc game over.
 function afficherGameOver(msg){
 	var txtHTML = "<img src='img/game_over.png'/><p><b>Game over</b> : " + msg + "</p><a href='#'onclick='javascript:location.reload();'>Rejouer.</a>";
 
@@ -201,8 +307,9 @@ function afficherGameOver(msg){
 	var content = createDiv(txtHTML);
 	content.addClass("content");
 	bloc.child(content);
-
 }
+
+// Afficher le bloc victoire.
 function afficherVictoire(msg){
 	var txtHTML = "<img src='img/sceptre_chronique.png'/>Bravo ! Tu as gagné. Tu as permis à Yom de construire le sceptre chronique. Tu as sauvé l'unnivers. Tous les habitants de l'unnivers parlerons encore de toi dans 1000 ans.";
 
@@ -213,26 +320,64 @@ function afficherVictoire(msg){
 	var content = createDiv(txtHTML);
 	content.addClass("content");
 	bloc.child(content);
-
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+//                                Actions                                     //
+////////////////////////////////////////////////////////////////////////////////
+
+// Les actions sont écrites dans un genre de mini language dont la syntaxe est :
+// `ACTION argument argument argument`
+// Les actions traitées sont
+//   - `GOTO scenarIdx`(eg. `GOTO 1`)
+//       Changer le `scenarIdx` du personnage qui appelle l'action.
+//       (Passer à une autre étape de son scénario)
+//   - `GOTOWITH scenarIdx type idx` (eg. `GOTOWITH 1 perso 3`)
+//       Changer le `scenarIdx` de l'ellement (`perso` ou `cycles`) indiqué
+//   - `SUB valeur ressource` (eg. `SUB 3 batons`)
+//       Soustraire la valeur indiquée à la ressource indiquée
+//   - `ADD valeur ressource` (eg. `SUB 3 batons`)
+//       Àjouter la valeur indiquée à la ressource indiquée
+//   - `MULT type idx attribut multiplicateur` (eg. `MULT cycle 0 duree 2`)
+//       Multiplie l'attribut indiqué par le multiplicateur indiqué
+//   - `OPEN type idx` (eg. `OPEN perso 1`)
+//       Rend `actif` de l'ellement (`perso` ou `cycles`) indiqué
+//   - `CLOSE type idx` (eg. `CLOSE perso 1`)
+//       Rend non `actif` de l'ellement (`perso` ou `cycles`) indiqué
+//   - `GAMEOVER Le message à afficher` (eg. `GAMEOVER Le joueur est mort`)
+//       Appelle la fonction afficherGameOver, met fin au jeu
+//   - `WIN` (eg. `WIN`)
+//       Appelle la fonction afficherVictoire, met fin au jeu
+
+// Cette fonction retourne true ou false selon que les actions passées sont
+// faisables
 function peutFaire(actions){
 	var possible = true;
+	// Passer en revue toutes les actions du tableau
 	for (var i = 0; i < actions.length; i++) {
 		var args = actions[i].split(" ");
 		var action = args.shift();
+		// Observer les actions de type "SUB"
 		if (action == "SUB"){
+			// Vérifier qu'il y a assez de la ressource concernée.
 			var quantite = args.shift();
 			var ressource = ressources[args.shift()];
 			possible &= ressource && ressource - quantite >= 0;
-		};
+		}
 	}
 	return possible;
 }
+
+// Effectuer les actions passées sur le perso passé
 function faire(actions, perso) {
+	// parcourir toutes les actions du tableau `actions`
 	for (var i = 0; i < actions.length; i++) {
+		// Séparer les mots
 		var args = actions[i].split(" ");
+		// Le premier mot est l'action à appeller
 		var action = args.shift();
+		// L'appeller avec les autres mots dans un tableau en guise d'arguments
 		if (action == "GOTO") goto(args);
 		else if (action == "GOTOWITH") gotowith(args);
 		else if (action == "SUB") sub(args);
@@ -241,9 +386,13 @@ function faire(actions, perso) {
 		else if (action == "OPEN") open(args);
 		else if (action == "CLOSE") close(args);
 		else if (action == "GAMEOVER") gameover(args);
+		else if (action == "WIN") gameover(args);
 		else console.error("Le mot clé de l'action n'a pas été reconnu");
 	}
+	// Une fois que c'est fait, actualiser
 	actualiser()
+
+	// Les fonctions correspondantes aux actions
 	function goto(args) {
 		perso.scenarIdx = args.shift();
 	}
@@ -312,20 +461,40 @@ function faire(actions, perso) {
 
 }
 
-function verifier(condition){
 
+////////////////////////////////////////////////////////////////////////////////
+//                                Evenements                                  //
+////////////////////////////////////////////////////////////////////////////////
+
+// Les evennements sont un dictionnaire, les clés sont les conditions et les
+// valeurs sont les actions à effectuer si la condition est éxécutée. Une fois
+// les actions exécutées, l'évennement est supprimé du dictionnaire.
+//
+// la syntaxe des condtions est la suivante :
+// `ressource opérateur veleur` ou `cycle idx attribut opérateur valeur`
+// (eg. `batons > 10` ou `cycle 0 duree < 1`)
+// Les opérateurs supportés sont `>`, `<`, `<=`, `>=`, `=`
+
+// Cette fonction renvois vrai ou faux selon que la condition est vrai ou fausse
+function verifier(condition){
+	// on comparera valeur1 à valeur2
 	var condition = condition.split(" ");
 	var cle = condition.shift();
-
 	var valeur1 = null;
+
+	// si le premier argument corresepond à une ressource, ce sera valeur 1
 	if (ressources[cle] !== undefined) valeur1 = ressources[cle];
+	// sinon si le premier argument est `cycle`, la valeur de l'attribut
+	// corresepondant au cycle indiqué sera la valeur 1
 	else if (cle == "cycle"){
 		var cycle = histoire[cle][condition.shift()]
 		valeur1 = float(cycle.scenar[cycle.scenarIdx][condition.shift()]);
-	} else return null;
+	}
+	else return null;
+
+	// Effectuer la comparaison
 	var operateur = condition.shift();
 	var valeur2 = float(condition.shift());
-
 	if (operateur == ">") return valeur1 > valeur2;
 	else if (operateur == ">=") return valeur1 >= valeur2;
 	else if (operateur == "<") return valeur1 < valeur2;
@@ -334,40 +503,53 @@ function verifier(condition){
 	else return null;
 }
 
+// Regarder toutes les conditions de l'objet evenements.
+// Faire les actions correspondants aux conditions vérifiées.
 function evenements () {
-	// Regarder toutes les conditions de l'objet evenements.
-	// Faire les actions correspondants aux conditions vérifiées.
 	for (var condition in histoire.evenements) {
 		if (histoire.evenements.hasOwnProperty(condition)) {
 			if (histoire.evenements[condition] && verifier(condition)) {
 				action = histoire.evenements[condition];
 				histoire.evenements[condition] = null;
-
 				faire(action);
 			}
 		}
 	}
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+//                                Cycles                                      //
+////////////////////////////////////////////////////////////////////////////////
+
+// Faire tourner les cycles
 function cycles() {
+	// frames par secondes pour l'actualisation des cycles
 	var fps = 50;
 
+	// renvois une fonction à appeller à chaque intervale
 	function faireProgress(idx) {
 		return function() {
+			// Si le cycle n'est plus actif, arrêter l'interval
 			if (! histoire.cycle[idx].actif){
 				clearInterval(histoire.cycle[idx].interval)
 				histoire.cycle[idx].interval = 0;
 			}
+			// Faire progresser `temps`
 			histoire.cycle[idx].temps += 1/fps;
+			// S'il dépasse `duree` le remettre à 0 et effectuer les actions correspondantes
 			if (histoire.cycle[idx].temps>=histoire.cycle[idx].scenar[histoire.cycle[idx].scenarIdx].duree){
 				histoire.cycle[idx].temps = 0;
 				faire(histoire.cycle[idx].scenar[histoire.cycle[idx].scenarIdx].action)
 			}
+			// réafficher le cycle
 			afficherCycle(histoire.cycle[idx])
 		}
-
 	}
+
+	// Parcourir les cycles
 	for (var i = 0; i < histoire.cycle.length; i++) {
+		// Lancer les cycles qui sont actif et qui ne sont pas encore lancés
 		if(! histoire.cycle[i].interval && histoire.cycle[i].actif) {
 			histoire.cycle[i].temps = 0;
 			histoire.cycle[i].interval = setInterval(faireProgress(i), 1000/fps);
