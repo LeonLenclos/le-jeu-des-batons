@@ -453,20 +453,20 @@
 				},
 				{
 					"idx" : 4,
-					"txt" : "Je t'échange 200 bâtons contre un carton.",
-					"oui" : ["SUB 200 batons", "ADD 1 boites_en_carton"],
+					"txt" : "Je t'échange 100 bâtons contre un carton.",
+					"oui" : ["SUB 100 batons", "ADD 1 boites_en_carton"],
 					"non" : ["GOTO 7"]
 				},
 				{
 					"idx" : 5,
-					"txt" : "Je t'échange 1500 bâtons contre dix cartons.",
-					"oui" : ["SUB 1500 batons", "ADD 10 boites_en_carton"],
+					"txt" : "Je t'échange 500 bâtons contre dix cartons.",
+					"oui" : ["SUB 500 batons", "ADD 10 boites_en_carton"],
 					"non" : ["GOTO 7"]
 				},
 				{
 					"idx" : 6,
-					"txt" : "Je t'échange 10000 bâtons contre cents cartons. C'est une affaire en or !",
-					"oui" : ["SUB 10000 batons","ADD 100 boites_en_carton"],
+					"txt" : "Je t'échange 1000 bâtons contre cents cartons. C'est une affaire en or !",
+					"oui" : ["SUB 1000 batons","ADD 100 boites_en_carton"],
 					"non" : ["GOTO 7"]
 				},
 				{
