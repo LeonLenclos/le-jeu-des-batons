@@ -13,5 +13,6 @@
 - [ ] Possibilité de sauvegarder la partie ?
 - [ ] Possibilité de jouer avec le clavier ??
 - [ ] Valoriser l'exploration des game-over par le joueur par exemple en indiquant la proportion de game over découverte sur le total
+      tu viens de perdre. ce jeu contient {victoires+echecs} fins vous avez découverts {victoire_trouvee} sur {victoires} victoires et {echecs_trouvees} sur {echecs} echecs
 - [ ] Indiquer le nom des ressources et le nom des personnage par exemple au survol des images
 
