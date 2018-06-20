@@ -6,6 +6,7 @@
 - [ ] faire corriger la langue (Trouver un moyen de le faire)
 - [ ] nettoyer le CSS et peut etre apporter un peu plus de soin au style (notament les choix et les gameover)
 - [ ] faire une page infos/credits/license
+- [ ] Régler le problème des `<a href='#'>` qui font remonter en haut de page
 
 ### Pas important
 
