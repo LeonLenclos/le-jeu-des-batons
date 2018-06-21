@@ -1,9 +1,9 @@
 {
 	"evenements": {
-		"batons > 10" : ["OPEN perso 1"],
+		"bâtons > 10" : ["OPEN perso 1"],
 		"chaussures > 2" : ["OPEN perso 2"],
 		"paires_de_chaussures = 1" : ["OPEN perso 3"],
-		"batons > 100" : ["OPEN perso 4"],
+		"bâtons > 100" : ["OPEN perso 4"],
 		"boites_en_carton > 1" : ["OPEN perso 5"],
 		"diamants > 0" : ["OPEN perso 6"],
 		"diamants < 1" : ["CLOSE perso 6"],
@@ -29,8 +29,8 @@
 				},
 				{
 					"idx" : 1,
-					"txt" : "Super ! Mon rôle est de te donner des bâtons</br>Tu veux un baton (c'est gratuit) ?",
-					"oui" : ["ADD 1 batons","GOTO 6"],
+					"txt" : "Super ! Mon rôle est de te donner des bâtons</br>Tu veux un bâton (c'est gratuit) ?",
+					"oui" : ["ADD 1 bâtons","GOTO 6"],
 					"non" : ["GOTO 5"]
 				},
 				{
@@ -48,19 +48,19 @@
 				{
 					"idx" : 4,
 					"txt" : "Tu veux un bâton ?",
-					"oui" : ["ADD 1 batons","GOTO 6"],
+					"oui" : ["ADD 1 bâtons","GOTO 6"],
 					"non" : ["GOTO 5"]
 				},
 				{
 					"idx" : 5,
 					"txt" : "Et maintenant tu veux un bâton ?",
-					"oui" : ["ADD 1 batons","GOTO 6"],
+					"oui" : ["ADD 1 bâtons","GOTO 6"],
 					"non" : ["GOTO 7"]
 				},
 				{
 					"idx" : 6,
 					"txt" : "Encore un bâton ?",
-					"oui" : ["ADD 1 batons","GOTO 4"],
+					"oui" : ["ADD 1 bâtons","GOTO 4"],
 					"non" : ["GOTO 5"]
 				},
 				{
@@ -102,7 +102,7 @@
 				{
 					"idx" : 13,
 					"txt" : "Tu veux un bâton monsieur l'affreux ?",
-					"oui" : ["GOTO 6", "ADD 1 batons"],
+					"oui" : ["GOTO 6", "ADD 1 bâtons"],
 					"non" : ["GOTO 8"]
 				},
 				{
@@ -122,13 +122,13 @@
 				{
 					"idx" : 0,
 					"txt" : "Salut moi c'est Riou</br>Tu as beaucoup de bâtons !</br>Tu m'en échange 10 contre une chaussure ?",
-					"oui" : ["SUB 10 batons","ADD 1 chaussures","GOTO 1"],
+					"oui" : ["SUB 10 bâtons","ADD 1 chaussures","GOTO 1"],
 					"non" : ["GOTO 2"]
 				},
 				{
 					"idx" : 1,
 					"txt" : "Tu as des bâton, j'ai des chaussures,</br>en veux tu une contre 10 bâtons ?",
-					"oui" : ["SUB 10 batons","ADD 1 chaussures","GOTO 3"],
+					"oui" : ["SUB 10 bâtons","ADD 1 chaussures","GOTO 3"],
 					"non" : ["GOTO 2"]
 				},
 				{
@@ -140,7 +140,7 @@
 				{
 					"idx" : 3,
 					"txt" : "Veux-tu une de mes chaussure contre 10 de tes bâtons ?",
-					"oui" : ["SUB 10 batons","ADD 1 chaussures","GOTO 1"],
+					"oui" : ["SUB 10 bâtons","ADD 1 chaussures","GOTO 1"],
 					"non" : ["GOTO 2"]
 				},
 				{
@@ -342,7 +342,7 @@
 				},
 				{
 					"idx" : 3,
-					"txt" : "Merci beaucoup ! Pour te remercier, je te ramenerai tous les batons que je trouverai par terre ! Ok ?",
+					"txt" : "Merci beaucoup ! Pour te remercier, je te ramenerai tous les bâtons que je trouverai par terre ! Ok ?",
 					"oui" : ["OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 perso 2"],
 					"non" : ["GOTO 6"]
 				},
@@ -454,19 +454,19 @@
 				{
 					"idx" : 4,
 					"txt" : "Je t'échange 100 bâtons contre un carton.",
-					"oui" : ["SUB 100 batons", "ADD 1 boites_en_carton"],
+					"oui" : ["SUB 100 bâtons", "ADD 1 boites_en_carton"],
 					"non" : ["GOTO 7"]
 				},
 				{
 					"idx" : 5,
 					"txt" : "Je t'échange 500 bâtons contre dix cartons.",
-					"oui" : ["SUB 500 batons", "ADD 10 boites_en_carton"],
+					"oui" : ["SUB 500 bâtons", "ADD 10 boites_en_carton"],
 					"non" : ["GOTO 7"]
 				},
 				{
 					"idx" : 6,
 					"txt" : "Je t'échange 1000 bâtons contre cents cartons. C'est une affaire en or !",
-					"oui" : ["SUB 1000 batons","ADD 100 boites_en_carton"],
+					"oui" : ["SUB 1000 bâtons","ADD 100 boites_en_carton"],
 					"non" : ["GOTO 7"]
 				},
 				{
@@ -882,13 +882,13 @@
 				{
 					"idx" : 2,
 					"txt" : "Pour construire le Sceptre il faut : Un bâton, une balle de ping-pong, un diamant divin (de Dieu) et environ 2000 citrons. <br/>Donne moi vite tout ça où l'unnivers sera détruit.",
-					"oui" : ["SUB 1 batons","SUB 1 balles_de_ping_pong","SUB 1 diamants", "SUB 2000 citrons", "WIN"],
+					"oui" : ["SUB 1 bâtons","SUB 1 balles_de_ping_pong","SUB 1 diamants", "SUB 2000 citrons", "WIN"],
 					"non" : ["GOTO 3"]
 				},
 				{
 					"idx" : 3,
 					"txt" : "Comment ça non ? Tu n'as pas tous les ingrédients ? Pourtant la prophétie disait que c'était toi, qu'on parlerait encore de toi dans 1000 ans. Que tu aurait réuni tous les ellements necessaires !",
-					"oui" : ["SUB 1 batons","SUB 1 balles_de_ping_pong","SUB 1 diamants", "SUB 2000 citrons", "WIN"],
+					"oui" : ["SUB 1 bâtons","SUB 1 balles_de_ping_pong","SUB 1 diamants", "SUB 2000 citrons", "WIN"],
 					"non" : ["GOTO 4"]
 				},
 				{
@@ -910,13 +910,13 @@
 					"idx" : 0,
 					"txt" : "Couraj court et dès qu'il trouve un bâton il te le ramène",
 					"duree" : 8,
-					"action": ["ADD 1 batons"]
+					"action": ["ADD 1 bâtons"]
 				},
 				{
 					"idx" : 1,
 					"txt" : "Couraj court et dès qu'il trouve cents bâtons il te les ramènes",
 					"duree" : 100,
-					"action": ["ADD 100 batons"]
+					"action": ["ADD 100 bâtons"]
 				}
 			]
 		},

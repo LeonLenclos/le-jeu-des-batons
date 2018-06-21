@@ -140,7 +140,7 @@ function afficherRessource(nom, quantite) {
 		}
 	}
 	nomLisible = nomLisible.join(" ");
-	var imgCSS = "url('img/" + nom + ".png')";
+	var imgCSS = "url('img/" + nom.replace("â","a") + ".png')";
 	var txtHTML = quantite + " <small>" + nomLisible + "</small>";
 	// Récupérer le bloc de la ressource à afficher, le créer s'il n'éxiste pas et
 	// que c'est necessaire
@@ -347,9 +347,9 @@ function afficherFin(contenu, classe) {
 //       (Passer à une autre étape de son scénario)
 //   - `GOTOWITH scenarIdx type idx` (eg. `GOTOWITH 1 perso 3`)
 //       Changer le `scenarIdx` de l'ellement (`perso` ou `cycles`) indiqué
-//   - `SUB valeur ressource` (eg. `SUB 3 batons`)
+//   - `SUB valeur ressource` (eg. `SUB 3 bâtons`)
 //       Soustraire la valeur indiquée à la ressource indiquée
-//   - `ADD valeur ressource` (eg. `SUB 3 batons`)
+//   - `ADD valeur ressource` (eg. `SUB 3 bâtons`)
 //       Àjouter la valeur indiquée à la ressource indiquée
 //   - `MULT type idx attribut multiplicateur` (eg. `MULT cycle 0 duree 2`)
 //       Multiplie l'attribut indiqué par le multiplicateur indiqué
@@ -484,7 +484,7 @@ function faire(actions, perso) {
 //
 // la syntaxe des condtions est la suivante :
 // `ressource opérateur veleur` ou `cycle idx attribut opérateur valeur`
-// (eg. `batons > 10` ou `cycle 0 duree < 1`)
+// (eg. `bâtons > 10` ou `cycle 0 duree < 1`)
 // Les opérateurs supportés sont `>`, `<`, `<=`, `>=`, `=`
 
 // Cette fonction renvois vrai ou faux selon que la condition est vrai ou fausse
