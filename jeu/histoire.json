@@ -127,7 +127,7 @@
 				},
 				{
 					"idx" : 1,
-					"txt" : "Tu as des bâton, j'ai des chaussures,</br>en veux tu une contre 10 bâtons ?",
+					"txt" : "Tu as des bâtons, j'ai des chaussures,</br>en veux tu une contre 10 bâtons ?",
 					"oui" : ["SUB 10 bâtons","ADD 1 chaussures","GOTO 3"],
 					"non" : ["GOTO 2"]
 				},
@@ -249,7 +249,7 @@
 				},
 				{
 					"idx" : 10,
-					"txt" : "Je trouves ça super de voir quelqu'un courrir avec autant d'aisence et d'endurence. Mais ce serai bien qu'il puisse aller un peu plus vite.",
+					"txt" : "Je trouve ça super de voir quelqu'un courir avec autant d'aisance et d'endurance. Mais ce serai bien qu'il puisse aller un peu plus vite.",
 					"oui" : ["GOTO 12", "OPEN perso 4"],
 					"non" : ["GOTO 13"]
 				},
@@ -261,7 +261,7 @@
 				},
 				{
 					"idx" : 12,
-					"txt" : "Donne-moi trois boîtes en carton et une chaussure et je veux bien faire un tour de magie pour qu'il court 2 fois plus vite.",
+					"txt" : "Donne-moi trois boîtes en carton et une chaussure et je veux bien faire un tour de magie pour qu'il coure 2 fois plus vite.",
 					"oui" : ["SUB 3 boites_en_carton", "SUB 1 chaussures", "MULT cycle 0 duree 0.5", "GOTO 16"],
 					"non" : ["GOTO 13"]
 				},
@@ -869,7 +869,7 @@
 			"scenar" : [
 				{
 					"idx" : 0,
-					"txt" : "Bonsoir. Je suis Yom. J'ai du tuer tous tes amis. La situation est extrêment urgente et toi seul peut sauver l'unnivers.",
+					"txt" : "Bonsoir. Je suis Yom. J'ai du tuer tous tes amis. La situation est extrêmement urgente et toi seul peut sauver l'univers.",
 					"oui" : ["GOTO 1"],
 					"non" : ["GOTO 1"]
 				},
