@@ -55,8 +55,8 @@ function actualiser() {
 // 			<p>Texte</p>
 // 		</div>
 // 		<div class="choices">
-// 			<a href="#" class="button oui">Oui</a>
-// 			<a href="#" class="button non">Non</a>
+// 			<a href="#!" class="button oui">Oui</a>
+// 			<a href="#!" class="button non">Non</a>
 // 		</div>
 // 	</div>
 //
@@ -65,8 +65,8 @@ function actualiser() {
 // 			<p>Texte</p>
 // 		</div>
 // 		<div class="choices">
-// 			<a href="#" class="button oui">Oui</a>
-// 			<a href="#" class="button non">Non</a>
+// 			<a href="#!" class="button oui">Oui</a>
+// 			<a href="#!" class="button non">Non</a>
 // 		</div>
 // 	</div>
 //
@@ -128,8 +128,20 @@ function afficherRessource(nom, quantite) {
 	}
 	// Informations relatives à la ressource à afficher
 	var id="ressource-" + nom;;
+	// Le nom de la ressource est rendu lisible en enlevant les _
+	var nomLisible = nom.split("_");
+	// si necessaire on rétablis l'accord de nombre
+	if(quantite < 2) {
+		for (var i = 0; i < nomLisible.length; i++) {
+			if (nomLisible[i].endsWith('s')) {
+				nomLisible[i] = nomLisible[i].slice(0, -1);
+				break;
+			}
+		}
+	}
+	nomLisible = nomLisible.join(" ");
 	var imgCSS = "url('img/" + nom + ".png')";
-	var txtHTML = quantite;
+	var txtHTML = quantite + " <small>" + nomLisible + "</small>";
 	// Récupérer le bloc de la ressource à afficher, le créer s'il n'éxiste pas et
 	// que c'est necessaire
 	var blocRessource = select("#" + id);
@@ -157,7 +169,7 @@ function afficherPerso(perso) {
 	var moment = perso.scenar[perso.scenarIdx];
 	var id = "perso" + perso.idx;
 	var imgCSS = "url('img/perso/" + perso.idx + ".png')";
-	var txtHTML = "<p>" + moment.txt + "</p>";
+	var txtHTML = "<p><small>" + perso.nom + " :</small> "+ moment.txt + "</p>";
 
 	// Récuperer #perso-container, le créer s'il n'éxiste pas.
 	var container = select("#perso-container");
@@ -205,7 +217,7 @@ function afficherPerso(perso) {
 		choices.addClass("choices");
 
 		// Créer le bouton Oui
-		var oui = createA("#", "Oui");
+		var oui = createA("#!", "Oui");
 		oui.addClass("button");
 		oui.addClass("oui");
 		// Les bouton sont differents selon que les actions correspondantes sont
@@ -217,7 +229,7 @@ function afficherPerso(perso) {
 			oui.addClass("impossible");
 		}
 		// Créer le bouton Non
-		var non = createA("#", "Non");
+		var non = createA("#!", "Non");
 		non.addClass("button");
 		non.addClass("non");
 		if (peutFaire(moment.non)) {
@@ -298,30 +310,30 @@ function afficherCycle(cycle) {
 
 // Afficher le bloc game over.
 function afficherGameOver(msg){
-	var txtHTML = "<img src='img/game_over.png'/><p><b>Game over</b> : " + msg + "</p><a href='#'onclick='javascript:location.reload();'>Rejouer.</a>";
-
-	bloc = createDiv("");
-	bloc.addClass("game-over");
-	bloc.addClass("bloc");
-
-	var content = createDiv(txtHTML);
-	content.addClass("content");
-	bloc.child(content);
+	var txtHTML = "<img src='img/game_over.png'/><p><strong>Game over</strong> : " + msg + "</p>";
+	afficherFin(txtHTML, "echec");
 }
 
 // Afficher le bloc victoire.
-function afficherVictoire(msg){
-	var txtHTML = "<img src='img/sceptre_chronique.png'/>Bravo ! Tu as gagné. Tu as permis à Yom de construire le sceptre chronique. Tu as sauvé l'unnivers. Tous les habitants de l'unnivers parlerons encore de toi dans 1000 ans.";
-
-	bloc = createDiv("");
-	bloc.addClass("victoire");
-	bloc.addClass("bloc");
-
-	var content = createDiv(txtHTML);
-	content.addClass("content");
-	bloc.child(content);
+function afficherVictoire(){
+	var txtHTML = "<img src='img/sceptre_chronique.png'/><p><strong>Victoire</strong> : Bravo ! Tu as gagné. Tu as permis à Yom de construire le sceptre chronique. Tu as sauvé l'unnivers. Tous les habitants de l'unnivers parlerons encore de toi dans 1000 ans.</p>";
+	afficherFin(txtHTML, "victoire");
 }
 
+//Affiche le bloc de fin (echec ou victoire)
+function afficherFin(contenu, classe) {
+
+		contenu += "<p><small>Tu es arrivé à une fin du jeu. Ce jeu contien 9 fins dont une <strong>victoire</strong> et 8 <strong>game over</strong>. Cliquez sur Rejouer pour rejouer : <a href='#'onclick='javascript:location.reload();'>Rejouer.</a></small></p>"
+
+		bloc = createDiv("");
+		bloc.addClass(classe);
+		bloc.addClass("bloc");
+
+		var content = createDiv(contenu);
+		content.addClass("content");
+		bloc.child(content);
+
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                Actions                                     //
@@ -386,7 +398,7 @@ function faire(actions, perso) {
 		else if (action == "OPEN") open(args);
 		else if (action == "CLOSE") close(args);
 		else if (action == "GAMEOVER") gameover(args);
-		else if (action == "WIN") gameover(args);
+		else if (action == "WIN") win(args);
 		else console.error("Le mot clé de l'action n'a pas été reconnu");
 	}
 	// Une fois que c'est fait, actualiser
