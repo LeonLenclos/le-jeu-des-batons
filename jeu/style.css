@@ -1,12 +1,16 @@
 
 body {
 	font-family: "Helvetica";
-	background : #ccc ;
+	background : #fff ;
 	font-size: 14px;
 	max-width: 600px;
+	min-width: 300px;
 	margin:auto;
 }
 
+strong, h1 {
+   text-transform: uppercase;
+}
 /****************************************/
 /*                BLOCS                 */
 /****************************************/
@@ -14,9 +18,19 @@ body {
 .bloc {
 	border: 1px solid black;
 	margin:5px;
-	background: #fff;
+  background : #ddd;
+
 }
 
+.bloc:hover {
+	background: #fff;
+
+}
+
+.bloc.new {
+	background: #fff;
+
+}
 .content {
 	background-repeat: no-repeat;
 background-position: bottom left;
@@ -49,27 +63,45 @@ h1 {
 /****************************************/
 
 .choices, .progress-bar{
+	display: flex;
+	align-items : stretch;
+	align-content : center;
+	justify-content : space-around;
+
 	width: 100%;
 	min-height: 20px;
 	border-top: 1px solid black;
 }
+/*
 .choices :first-child{
 	border-right: 1px solid black;
 	margin-right: -1px;
-}
+}*/
 .button {
-	display: inline-block;
-	width: 50%;
+  flex-grow : 1;
 	text-align: center;
 	text-decoration: none;
 	color: black;
-	text-transform: lowercase;
+	height: 100%;
+	border-left: 1px solid black;
+	margin-left : -1px;
+	padding: 2px;
+	background : #ddd;
 }
 .button:hover{
-	text-transform:uppercase;
+	background : #fff;
+}
+.button:hover{
+	background : #fff;
 }
 .impossible{
 	text-decoration:line-through;
+	background : #bbb;
+
+}
+.impossible:hover{
+	text-decoration:line-through;
+	background : #bbb;
 }
 
 .progress{

@@ -189,6 +189,7 @@ function afficherPerso(perso) {
 		content.style("background-image", imgCSS);
 		bloc.child(content);
 		container.child(bloc)
+		// bloc.mouseOver(ENLEVER LE NEW LA);
 	}
 	// Le supprimer si c'est necessaire.
 	else if (bloc && !actif) {
@@ -198,6 +199,7 @@ function afficherPerso(perso) {
 	else if (bloc){
 		var content = select('.content', bloc);
 		if (content.html() != txtHTML) {
+			// bloc.addClass("new");
 			content.html(txtHTML);
 		}
 	}
