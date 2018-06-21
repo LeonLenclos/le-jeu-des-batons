@@ -337,19 +337,19 @@
 				{
 					"idx" : 2,
 					"txt" : "Moi j'adore les chaussures. Je vois que tu as une paire de chaussures ici, je te  peux te les prendre ?",
-					"oui" : ["GOTO 3"],
+					"oui" : ["SUB 1 paires_de_chaussures", "GOTO 3"],
 					"non" : ["GOTO 4"]
 				},
 				{
 					"idx" : 3,
 					"txt" : "Merci beaucoup ! Pour te remercier, je te ramenerai tous les batons que je trouverai par terre ! Ok ?",
-					"oui" : ["GOTO 3","SUB 1 paires_de_chaussures", "OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 perso 2"],
+					"oui" : ["OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 perso 2"],
 					"non" : ["GOTO 6"]
 				},
 				{
 					"idx" : 4,
 					"txt" : "Je ne peux pas courir sans paire de chaussures. Et si je ne peux pas courir je suis personne ! Donne les moi s'il te plait !",
-					"oui" : ["GOTO 3","SUB 1 paires_de_chaussures", "OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 perso 2"],
+					"oui" : ["SUB 1 paires_de_chaussures", "GOTO 3"],
 					"non" : ["GOTO 5"]
 				},
 				{
@@ -361,13 +361,13 @@
 				{
 					"idx" : 6,
 					"txt" : "J'insiste, tu as été très généreux et je veux te remercier en te donnant des bâtons. Ok ?",
-					"oui" : ["OPEN cycle 0"],
+					"oui" : ["OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 perso 2"],
 					"non" : ["GOTO 7"]
 				},
 				{
 					"idx" : 7,
 					"txt" : "J'insiste, c'est la moindre des choses pour moi de te ramener un petit bâton de temps en temps ! Ok ?",
-					"oui" : ["OPEN cycle 0"],
+					"oui" : ["OPEN cycle 0", "CLOSE perso 3", "GOTOWITH 9 perso 2"],
 					"non" : ["GOTO 6"]
 				},
 				{
@@ -379,7 +379,7 @@
 				{
 					"idx" : 9,
 					"txt" : "Désolé, je ne savais pas que tu était aveugle... Si tu me donne ta paire de chaussure, je demanderai à Pilili de te rendre la vue ! Ok ?",
-					"oui" : ["GOTO 3"],
+					"oui" : ["SUB 1 paires_de_chaussures", "GOTO 3"],
 					"non" : ["GOTO 11"]
 				},
 				{
@@ -391,7 +391,7 @@
 				{
 					"idx" : 11,
 					"txt" : "S'iiiiiil teeeeee plaaaaaait ! Donne moi ta paire de chaussures !",
-					"oui" : ["GOTO 3"],
+					"oui" : ["SUB 1 paires_de_chaussures", "GOTO 3"],
 					"non" : ["GOTO 12"]
 				},
 				{
