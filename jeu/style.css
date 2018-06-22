@@ -143,6 +143,8 @@ h1 {
 /****************************************/
 
 #ressources {
+	position:fixed;
+	bottom : 100px;
 	display: flex;
 	flex-wrap: wrap;
 }
