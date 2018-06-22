@@ -37,14 +37,14 @@
 				{
 					"idx" : 2,
 					"txt" : "euh... t'es sûr ?",
-					"oui" : ["GAMEOVER Le joueur ne voulais pas jouer"],
+					"oui" : ["GAMEOVER Le joueur ne voulait pas jouer"],
 					"non" : ["GOTO 3"]
 				},
 				{
 					"idx" : 3,
 					"txt" : "Ok, je te donne une dernière chance.</br>Tu veux jouer ?",
 					"oui" : ["GOTO 1"],
-					"non" : ["GAMEOVER Le joueur ne voulais pas jouer"]
+					"non" : ["GAMEOVER Le joueur ne voulait pas jouer"]
 				},
 				{
 					"idx" : 4,
@@ -84,14 +84,14 @@
 				},
 				{
 					"idx" : 10,
-					"txt" : "Il est mort en courant. Parcequ'il courrait trop vite. Quelle horreur n'est-ce pas ?",
+					"txt" : "Il est mort en courant. Parcequ'il courait trop vite. Quelle horreur n'est-ce pas ?",
 					"oui" : ["GOTO 11"],
 					"non" : ["GOTO 12"]
 				},
 				{
 					"idx" : 11,
 					"txt" : "Ça me donne envie d'arrêter ce jeu. Toi aussi ?",
-					"oui" : ["GAMEOVER Le joueur ne voulais pas jouer"],
+					"oui" : ["GAMEOVER Le joueur ne voulait pas jouer."],
 					"non" : ["GOTO 14"]
 				},
 				{
@@ -387,7 +387,7 @@
 					"idx" : 10,
 					"txt" : "As-tu un cœur ?!",
 					"oui" : ["GOTO 11"],
-					"non" : ["GAMEOVER Le joueur n'avait pas de cœur"]
+					"non" : ["GAMEOVER Le joueur n'avait pas de cœur."]
 				},
 				{
 					"idx" : 11,
@@ -722,7 +722,7 @@
 					"idx" : 0,
 					"txt" : "Salut, je suis Clop le bandit. Donne moi ton diamant ou je te tue.",
 					"oui" : ["SUB 1 diamants", "CLOSE perso 6"],
-					"non" : ["GAMEOVER Le joueur a été tué par un bandit"]
+					"non" : ["GAMEOVER Le joueur a été tué par un bandit."]
 				}
 			]
 		},
@@ -870,7 +870,7 @@
 			"scenar" : [
 				{
 					"idx" : 0,
-					"txt" : "Bonsoir. Je suis Yom. J'ai du tuer tous tes amis. La situation est extrêmement urgente et toi seul peut sauver l'univers.",
+					"txt" : "Bonsoir. Je suis Yom. J'ai dû tuer tous tes amis. La situation est extrêmement urgente et toi seul peut sauver l'univers.",
 					"oui" : ["GOTO 1"],
 					"non" : ["GOTO 1"]
 				},

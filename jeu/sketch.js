@@ -148,13 +148,13 @@ function afficherStat() {
 		bloc.hide();
 	}
 	// Meilleur temps
-	var meilleurTemps = Cookies.get('meilleur-temps');
+	var meilleurTemps = Cookies.get('ljdb1.0-meilleur-temps');
 	var meilleurTempsHTML = "Tu n'as jamais gagné le jeu des bâtons.";
 	if (meilleurTemps) {
 		meilleurTempsHTML = "Tu as déjà gagné le jeu des bâtons en " + tempsLisible(JSON.parse(meilleurTemps)) +".";
 	}
 	// Fins explorées
-	var finsExplorees = Cookies.get('fins-explorees');
+	var finsExplorees = Cookies.get('ljdb1.0-fins-explorees');
 	var finsExploreesHTML = "Tu n'as encore exploré aucune fin.";
 	if (finsExplorees) {
 		finsExplorees = JSON.parse(finsExplorees);
@@ -163,7 +163,7 @@ function afficherStat() {
 		finsExploreesHTML = "Tu as exploré " + n + " fin"+plu+" sur 9.";
 	}
 	// Ressources decouvertes
-	var ressourcesDecouvertes = Cookies.get('ressources-decouvertes');
+	var ressourcesDecouvertes = Cookies.get('ljdb1.0-ressources-decouvertes');
 	var ressourcesDecouvertesHTML = "Tu n'as encore découvert aucune ressource.";
 	if (ressourcesDecouvertes) {
 		ressourcesDecouvertes = JSON.parse(ressourcesDecouvertes);
@@ -172,7 +172,7 @@ function afficherStat() {
 		ressourcesDecouvertesHTML = "Tu as découvert " + n + " ressource"+plu+" sur 7.";
 	}
 	// Personnage rencontrés
-	var personnagesRencontres = Cookies.get('personnages-rencontres');
+	var personnagesRencontres = Cookies.get('ljdb1.0-personnages-rencontres');
 	var personnagesRencontresHTML = "Tu n'as encore rencontré aucun personnage.";
 	if (personnagesRencontres) {
 		personnagesRencontres = JSON.parse(personnagesRencontres);
@@ -260,7 +260,12 @@ function afficherPerso(perso) {
 		content.style("background-image", imgCSS);
 		bloc.child(content);
 		container.child(bloc)
-		// bloc.mouseOver(ENLEVER LE NEW LA);
+		function faireVieillir(bloc) {
+			return function(e) {
+				bloc.removeClass('new');
+			};
+		}
+		bloc.mouseOver(faireVieillir(bloc));
 	}
 	// Le supprimer si c'est necessaire.
 	else if (bloc && !actif) {
@@ -270,7 +275,7 @@ function afficherPerso(perso) {
 	else if (bloc){
 		var content = select('.content', bloc);
 		if (content.html() != txtHTML) {
-			// bloc.addClass("new");
+			if(!bloc.class().match('new')) bloc.addClass("new");
 			content.html(txtHTML);
 		}
 	}
@@ -311,9 +316,9 @@ function afficherPerso(perso) {
 		else {
 			non.addClass("impossible");
 		}
+		choices.child(non);
 
 		choices.child(oui);
-		choices.child(non);
 		bloc.child(choices);
 	}
 }
@@ -497,7 +502,7 @@ function faire(actions, perso) {
 		var ressource = args.join(" ");
 		if (ressources[ressource]) ressources[ressource] += quantite;
 		else ressources[ressource] = quantite;
-		var cook = Cookies.get('ressources-decouvertes')
+		var cook = Cookies.get('ljdb1.0-ressources-decouvertes')
 		if (cook){
 			cook = JSON.parse(cook);
 			set = new Set(cook);
@@ -505,7 +510,7 @@ function faire(actions, perso) {
 			cook = Array.from(set);
 		}
 		else cook = [ressource];
-		if (!tricheur) Cookies.set('ressources-decouvertes', cook, { expires: 365 })
+		if (!tricheur) Cookies.set('ljdb1.0-ressources-decouvertes', cook, { expires: 365 })
 
 	}
 	function sub(args) {
@@ -520,7 +525,7 @@ function faire(actions, perso) {
 		for (var i = 0; i < histoire[type].length; i++) {
 			if (histoire[type][i].idx == idx) histoire[type][i].actif = true;
 		}
-		var cook = Cookies.get('personnages-rencontres')
+		var cook = Cookies.get('ljdb1.0-personnages-rencontres')
 		if (cook){
 			cook = JSON.parse(cook);
 			set = new Set(cook);
@@ -528,7 +533,7 @@ function faire(actions, perso) {
 			cook = Array.from(set);
 		}
 		else cook = [idx];
-		if (!tricheur) Cookies.set('personnages-rencontres', cook, { expires: 365 })
+		if (!tricheur) Cookies.set('ljdb1.0-personnages-rencontres', cook, { expires: 365 })
 	}
 	function close(args) {
 		var type = args.shift();
@@ -552,7 +557,7 @@ function faire(actions, perso) {
 			histoire.cycle[i].actif = false;
 		}
 		var msg = args.join(" ");
-		var cook = Cookies.get('fins-explorees')
+		var cook = Cookies.get('ljdb1.0-fins-explorees')
 		if (cook){
 			cook = JSON.parse(cook);
 			set = new Set(cook);
@@ -560,7 +565,7 @@ function faire(actions, perso) {
 			cook = Array.from(set);
 		}
 		else cook = [msg];
-		if (!tricheur) Cookies.set('fins-explorees', cook, { expires: 365 })
+		if (!tricheur) Cookies.set('ljdb1.0-fins-explorees', cook, { expires: 365 })
 		afficherGameOver(msg, new Date().getTime() - tempsAuDebut)
 	}
 	function win(args) {
@@ -571,7 +576,7 @@ function faire(actions, perso) {
 			histoire.cycle[i].actif = false;
 		}
 		var msg = "win"
-		var cook = Cookies.get('fins-explorees')
+		var cook = Cookies.get('ljdb1.0-fins-explorees')
 		if (cook){
 			cook = JSON.parse(cook);
 			set = new Set(cook);
@@ -579,17 +584,17 @@ function faire(actions, perso) {
 			cook = Array.from(set);
 		}
 		else cook = [msg];
-		if (!tricheur) Cookies.set('fins-explorees', cook, { expires: 365 })
+		if (!tricheur) Cookies.set('ljdb1.0-fins-explorees', cook, { expires: 365 })
 
 		var temps = new Date().getTime() - tempsAuDebut;
-		cook = Cookies.get('meilleur-temps');
+		cook = Cookies.get('ljdb1.0-meilleur-temps');
 		if(cook) {
 			cook = JSON.parse(cook);
 			if(temps < cook){
 				cook = temps;
 			}
 		} else cook = temps
-		if (!tricheur) Cookies.set('meilleur-temps', cook, { expires: 365 });
+		if (!tricheur) Cookies.set('ljdb1.0meilleur-temps', cook, { expires: 365 });
 
 		afficherVictoire(temps)
 	}
