@@ -42,7 +42,7 @@ a:hover {
 }
 
 .bloc.new {
-	background: #fff;
+	background: #eee;
 
 }
 .content {
@@ -143,6 +143,8 @@ h1 {
 /****************************************/
 
 #ressources {
+	position:fixed;
+	bottom : 100px;
 	display: flex;
 	flex-wrap: wrap;
 }
