@@ -1,6 +1,7 @@
 <!doctype html>
 	<head>
 		<meta charset="UTF-8">
+		<script src="lib/js.cookie.js"></script>
 		<script src="lib/p5.js"></script>
 		<script src="lib/p5.dom.js"></script>
 		<script src="button.js"></script>
@@ -11,6 +12,20 @@
 
 	<body>
 		<div class="bloc">
-			<h1>Le jeu des bâtons</h1>
+			<div class="content">
+				<a href="#!" class="lien-info" onclick="select('#info').show()">[?]</a>
+				<a href="#!" class="lien-info" onclick="select('#stat').show()">[!]</a>
+				<h1>Le jeu des bâtons</h1>
+			</div>
+		</div>
+		<div class="bloc info" id="info" style="display: none;">
+			<div class="content">
+				<a href="#!" class="lien-info" onclick="select('#info').hide();">[X]</a>
+				<p>Le jeu des bâtons est un jeu de <a rel="author" href="http://leonlenclos.net">Léon Lenclos</a> créé en 2018 et placé sous license
+					<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a> (<a href="https://github.com/LeonLenclos/le-jeu-des-batons">source</a>).
+				</p>
+				<p>Merci à Louis et Alex pour leur regard.</p>
+				<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+			</div>
 	</body>
 </html>

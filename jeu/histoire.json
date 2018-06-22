@@ -1,8 +1,9 @@
 {
 	"evenements": {
+		"START" : ["OPEN perso 0"],
 		"bâtons > 10" : ["OPEN perso 1"],
 		"chaussures > 2" : ["OPEN perso 2"],
-		"paires_de_chaussures = 1" : ["OPEN perso 3"],
+		"paires_de_chaussures >= 1" : ["OPEN perso 3"],
 		"bâtons > 100" : ["OPEN perso 4"],
 		"boites_en_carton > 1" : ["OPEN perso 5"],
 		"diamants > 0" : ["OPEN perso 6"],
@@ -18,7 +19,7 @@
 		{
 			"nom" : "Cou",
 			"idx" : 0,
-			"actif" : true,
+			"actif" : false,
 			"scenarIdx" : 0,
 			"scenar" : [
 				{
@@ -851,7 +852,7 @@
 					"idx" : 5,
 					"txt" : "Tu es prévenu !</br>Essaye de ne jamais avoir plus de 10000 citrons ou tu mourra.</br> Voilà... Tu as tout compris ?",
 					"oui" : ["GOTO 6"],
-					"non" : ["GOTO 7"]
+					"non" : ["GOTO 6"]
 				},
 				{
 					"idx" : 6,
@@ -875,13 +876,13 @@
 				},
 				{
 					"idx" : 1,
-					"txt" : "Comme tu le sais sûrement, il faut absolument construire un Sceptre Chronique pour dévier la trajectoire du rayon gamma qui va détruire l'unnivers dans 20 secondes si on ne fait rien !",
+					"txt" : "Comme tu le sais sûrement, il faut absolument construire un Sceptre Chronique pour dévier la trajectoire du rayon gamma qui va détruire l'univers dans 20 secondes si on ne fait rien !",
 					"oui" : ["GOTO 2", "OPEN cycle 2"],
 					"non" : ["GOTO 2", "OPEN cycle 2"]
 				},
 				{
 					"idx" : 2,
-					"txt" : "Pour construire le Sceptre il faut : Un bâton, une balle de ping-pong, un diamant divin (de Dieu) et environ 2000 citrons. <br/>Donne moi vite tout ça où l'unnivers sera détruit.",
+					"txt" : "Pour construire le Sceptre il faut : Un bâton, une balle de ping-pong, un diamant divin (de Dieu) et environ 2000 citrons. <br/>Donne moi vite tout ça où l'univers sera détruit.",
 					"oui" : ["SUB 1 bâtons","SUB 1 balles_de_ping_pong","SUB 1 diamants", "SUB 2000 citrons", "WIN"],
 					"non" : ["GOTO 3"]
 				},
@@ -893,7 +894,7 @@
 				},
 				{
 					"idx" : 3,
-					"txt" : "L'unnivers va être détruit et on ne peut rien faire...",
+					"txt" : "L'univers va être détruit et on ne peut rien faire...",
 					"oui" : [],
 					"non" : []
 				}
@@ -940,9 +941,9 @@
 			"scenar" : [
 				{
 					"idx" : 0,
-					"txt" : "L'unnivers va être détruit par le rayon gamma.",
+					"txt" : "L'univers va être détruit par le rayon gamma.",
 					"duree" : 20,
-					"action": ["GAMEOVER L'unnivers du joueur a été détruit."]
+					"action": ["GAMEOVER L'univers du joueur a été détruit."]
 				}
 			]
 		}
