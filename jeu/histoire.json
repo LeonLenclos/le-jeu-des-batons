@@ -24,13 +24,13 @@
 			"scenar" : [
 				{
 					"idx" : 0,
-					"txt" : "Salut, Je me présente, je m'appelle Cou.</br>tu veux jouer ?",
+					"txt" : "Salut, Je me présente, je m'appelle Cou.<br>tu veux jouer ?",
 					"oui" : ["GOTO 1"],
 					"non" : ["GOTO 2"]
 				},
 				{
 					"idx" : 1,
-					"txt" : "Super ! Mon rôle est de te donner des bâtons</br>Tu veux un bâton (c'est gratuit) ?",
+					"txt" : "Super ! Mon rôle est de te donner des bâtons<br>Tu veux un bâton (c'est gratuit) ?",
 					"oui" : ["ADD 1 bâtons","GOTO 6"],
 					"non" : ["GOTO 5"]
 				},
@@ -42,7 +42,7 @@
 				},
 				{
 					"idx" : 3,
-					"txt" : "Ok, je te donne une dernière chance.</br>Tu veux jouer ?",
+					"txt" : "Ok, je te donne une dernière chance.<br>Tu veux jouer ?",
 					"oui" : ["GOTO 1"],
 					"non" : ["GAMEOVER Le joueur ne voulait pas jouer"]
 				},
@@ -122,19 +122,19 @@
 			"scenar" : [
 				{
 					"idx" : 0,
-					"txt" : "Salut moi c'est Riou</br>Tu as beaucoup de bâtons !</br>Tu m'en échange 10 contre une chaussure ?",
+					"txt" : "Salut moi c'est Riou<br>Tu as beaucoup de bâtons !<br>Tu m'en échange 10 contre une chaussure ?",
 					"oui" : ["SUB 10 bâtons","ADD 1 chaussures","GOTO 1"],
 					"non" : ["GOTO 2"]
 				},
 				{
 					"idx" : 1,
-					"txt" : "Tu as des bâtons, j'ai des chaussures,</br>en veux tu une contre 10 bâtons ?",
+					"txt" : "Tu as des bâtons, j'ai des chaussures,<br>en veux tu une contre 10 bâtons ?",
 					"oui" : ["SUB 10 bâtons","ADD 1 chaussures","GOTO 3"],
 					"non" : ["GOTO 2"]
 				},
 				{
 					"idx" : 2,
-					"txt" : "Ok, dans ce cas : ciao-bye-bye !</br>À moins que tu n'ai changé d'avis ?",
+					"txt" : "Ok, dans ce cas : ciao-bye-bye !<br>À moins que tu n'ai changé d'avis ?",
 					"oui" : ["GOTO 1"],
 					"non" : ["GOTO 4"]
 				},
@@ -146,13 +146,13 @@
 				},
 				{
 					"idx" : 4,
-					"txt" : "Ok, dans ce cas : arrivederci-mon-ami !</br>À moins que tu n'ai changé d'avis ?",
+					"txt" : "Ok, dans ce cas : arrivederci-mon-ami !<br>À moins que tu n'ai changé d'avis ?",
 					"oui" : ["GOTO 1"],
 					"non" : ["GOTO 5"]
 				},
 				{
 					"idx" : 5,
-					"txt" : "Ok, dans ce cas : adios amigos !</br>À moins que tu n'ai changé d'avis ?",
+					"txt" : "Ok, dans ce cas : adios amigos !<br>À moins que tu n'ai changé d'avis ?",
 					"oui" : ["GOTO 1"],
 					"non" : ["GOTO 6"]
 				},
@@ -190,13 +190,13 @@
 			"scenar" : [
 				{
 					"idx" : 0,
-					"txt" : "Coucou ! je suis Pilili !</br>Ça va ?",
+					"txt" : "Coucou ! je suis Pilili !<br>Ça va ?",
 					"oui" : ["GOTO 1"],
 					"non" : ["GOTO 2"]
 				},
 				{
 					"idx" : 1,
-					"txt" : "Coooool ! Moi je suis un peu une magicienne</br>Tu veux voir un tour de magie ?",
+					"txt" : "Coooool ! Moi je suis un peu une magicienne<br>Tu veux voir un tour de magie ?",
 					"oui" : ["SUB 2 chaussures","ADD 1 paires_de_chaussures","GOTO 3"],
 					"non" : ["GOTO 2"]
 				},
@@ -214,19 +214,19 @@
 				},
 				{
 					"idx" : 4,
-					"txt" : "Oups, je suis vraiment désolé, j'avais oublié que tu ne pouvais répondre que oui ou non...</br>Veux-tu un tour de magie pour me faire pardonner ma maladresse ?",
+					"txt" : "Oups, je suis vraiment désolé, j'avais oublié que tu ne pouvais répondre que oui ou non...<br>Veux-tu un tour de magie pour me faire pardonner ma maladresse ?",
 					"oui" : ["SUB 2 chaussures","ADD 1 paires_de_chaussures","GOTO 3"],
 					"non" : ["GOTO 2"]
 				},
 				{
 					"idx" : 5,
-					"txt" : "Malheureusement un magicien ne fait jamais deux fois le même tour.</br>Tu voulais vraiment le revoir ?",
+					"txt" : "Malheureusement un magicien ne fait jamais deux fois le même tour.<br>Tu voulais vraiment le revoir ?",
 					"oui" : ["GOTO 7"],
 					"non" : ["GOTO 8"]
 				},
 				{
 					"idx" : 6,
-					"txt" : "Tu es sûr que tu ne veux pas revoir</br>le tour de la paire de chaussure ?",
+					"txt" : "Tu es sûr que tu ne veux pas revoir<br>le tour de la paire de chaussure ?",
 					"oui" : ["GOTO 8"],
 					"non" : ["GOTO 7"]
 				},
@@ -700,7 +700,7 @@
 				},
 				{
 					"idx" : 30,
-					"txt" : "Voilà ce que je te proposes. Tu me donne un citron et en échange, moi je te donne 1000 citrons.</br>Veux tu faire cet échange divin ?",
+					"txt" : "Voilà ce que je te proposes. Tu me donne un citron et en échange, moi je te donne 1000 citrons.<br>Veux tu faire cet échange divin ?",
 					"oui" : ["SUB 1 citrons", "ADD 1000 citrons", "GOTO 31"],
 					"non" : ["GOTO 29"]
 				},
@@ -850,7 +850,7 @@
 				},
 				{
 					"idx" : 5,
-					"txt" : "Tu es prévenu !</br>Essaye de ne jamais avoir plus de 10000 citrons ou tu mourra.</br> Voilà... Tu as tout compris ?",
+					"txt" : "Tu es prévenu !<br>Essaye de ne jamais avoir plus de 10000 citrons ou tu mourra.<br> Voilà... Tu as tout compris ?",
 					"oui" : ["GOTO 6"],
 					"non" : ["GOTO 6"]
 				},

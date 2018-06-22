@@ -256,6 +256,8 @@ function afficherPerso(perso) {
 		bloc.id(id)
 		// Ce bloc contient un div.content ou seront affichés le texte et l'image
 		var content = createDiv(txtHTML);
+		if(!bloc.class().match('new')) bloc.addClass("new");
+
 		content.addClass("content");
 		content.style("background-image", imgCSS);
 		bloc.child(content);
@@ -275,6 +277,8 @@ function afficherPerso(perso) {
 	else if (bloc){
 		var content = select('.content', bloc);
 		if (content.html() != txtHTML) {
+			print(content.html())
+			print(txtHTML)
 			if(!bloc.class().match('new')) bloc.addClass("new");
 			content.html(txtHTML);
 		}
