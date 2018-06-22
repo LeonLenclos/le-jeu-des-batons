@@ -598,7 +598,7 @@ function faire(actions, perso) {
 				cook = temps;
 			}
 		} else cook = temps
-		if (!tricheur) Cookies.set('ljdb1.0meilleur-temps', cook, { expires: 365 });
+		if (!tricheur) Cookies.set('ljdb1.0-meilleur-temps', cook, { expires: 365 });
 
 		afficherVictoire(temps)
 	}
