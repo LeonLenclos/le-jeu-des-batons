@@ -316,9 +316,9 @@ function afficherPerso(perso) {
 		else {
 			non.addClass("impossible");
 		}
-		choices.child(non);
 
 		choices.child(oui);
+		choices.child(non);
 		bloc.child(choices);
 	}
 }
