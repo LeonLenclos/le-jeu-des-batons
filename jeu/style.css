@@ -81,7 +81,7 @@ h1 {
 .lien-info {
 	float: right;
 	margin : 2px;
-	font-family: "mono";
+	font-family: monospace;
 	text-decoration: none;
 
 }
