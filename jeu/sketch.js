@@ -11,6 +11,7 @@ var histoire = {};
  // Dictionnaire contenant les ressources dont dispose le joueur.
 var ressources = {};
 
+var tempsAuDebut;
 
 ////////////////////////////////////////////////////////////////////////////////
 //                               Fonctions de base                            //
@@ -20,6 +21,7 @@ var ressources = {};
 function preload () {
 	// Avant tout, chargement de l'histoire.
 	histoire = loadJSON('histoire.json');
+
 }
 
 // Fonction p5
@@ -29,6 +31,9 @@ function setup() {
 	noLoop();
 	// Première actualisation.
 	actualiser();
+	// Timer
+	tempsAuDebut = new Date().getTime();
+
 }
 
 // Fonction principale du jeu
@@ -101,6 +106,8 @@ function actualiser() {
 
 // Affiche tous les ellements du jeu.
 function afficher() {
+	// Afficher stats
+	afficherStat();
 	// Afficher les personnages.
 	for (var i = 0; i < histoire.perso.length; i++) {
 		afficherPerso(histoire.perso[i]);
@@ -115,6 +122,70 @@ function afficher() {
 			afficherRessource(ressource, ressources[ressource]);
 		}
 	}
+}
+
+// transforme une duree en millisecondes en une phrases type "3 minutes et 40 secondes"
+function tempsLisible(milis) {
+	var secondes = Math.floor(milis/1000);
+	var minutes = Math.floor(secondes/60);
+	secondes %= 60
+	txt = "";
+	if (minutes > 1) txt += minutes + " minutes et ";
+	else txt += minutes + " minute et ";
+	if (secondes > 1) txt += secondes + " secondes";
+	else txt += secondes + " seconde";
+	return txt
+}
+
+// Affiche les statistiques
+function afficherStat() {
+	// Récuperer le bloc #ressources ou le créer s'il n'existe pas.
+	var bloc = select("#stat");
+	if(!bloc){
+		bloc = createDiv("");
+		bloc.addClass("bloc");
+		bloc.id("stat");
+		bloc.hide();
+	}
+	// Meilleur temps
+	var meilleurTemps = Cookies.get('meilleur-temps');
+	var meilleurTempsHTML = "Tu n'as jamais gagné le jeu des bâtons.";
+	if (meilleurTemps) {
+		meilleurTempsHTML = "Tu as déjà gagné le jeu des bâtons en " + tempsLisible(JSON.parse(meilleurTemps)) +".";
+	}
+	// Fins explorées
+	var finsExplorees = Cookies.get('fins-explorees');
+	var finsExploreesHTML = "Tu n'as encore exploré aucune fin.";
+	if (finsExplorees) {
+		finsExplorees = JSON.parse(finsExplorees);
+		var n = finsExplorees.length;
+		var plu = n > 1 ? 's' : '';
+		finsExploreesHTML = "Tu as exploré " + n + " fin"+plu+" sur 9.";
+	}
+	// Ressources decouvertes
+	var ressourcesDecouvertes = Cookies.get('ressources-decouvertes');
+	var ressourcesDecouvertesHTML = "Tu n'as encore découvert aucune ressource.";
+	if (ressourcesDecouvertes) {
+		ressourcesDecouvertes = JSON.parse(ressourcesDecouvertes);
+		var n = ressourcesDecouvertes.length;
+		var plu = n > 1 ? 's' : '';
+		ressourcesDecouvertesHTML = "Tu as découvert " + n + " ressource"+plu+" sur 7.";
+	}
+	// Personnage rencontrés
+	var personnagesRencontres = Cookies.get('personnages-rencontres');
+	var personnagesRencontresHTML = "Tu n'as encore rencontré aucun personnage.";
+	if (personnagesRencontres) {
+		personnagesRencontres = JSON.parse(personnagesRencontres);
+		var n = personnagesRencontres.length;
+		var plu = n > 1 ? 's' : '';
+		personnagesRencontresHTML = "Tu as rencontré " + n + " personnage"+plu+" sur 10.";
+	}
+
+	var txtHTML = "<div class='content'><a href='#!' class='lien-info' onclick=\"select('#stat').hide();\">[X]</a><p>"+meilleurTempsHTML+"</p><p>"+finsExploreesHTML+"</p><p>"+ressourcesDecouvertesHTML+"</p><p>"+personnagesRencontresHTML+"</p>";
+	if (bloc.html() != txtHTML) bloc.html(txtHTML);
+
+
+
 }
 
 // Affiche la ressource concernée s'il faut.
@@ -311,21 +382,21 @@ function afficherCycle(cycle) {
 }
 
 // Afficher le bloc game over.
-function afficherGameOver(msg){
+function afficherGameOver(msg, milis){
 	var txtHTML = "<img src='img/game_over.png'/><p><strong>Game over</strong> : " + msg + "</p>";
-	afficherFin(txtHTML, "echec");
+	afficherFin(txtHTML, "echec", milis);
 }
 
 // Afficher le bloc victoire.
-function afficherVictoire(){
+function afficherVictoire(milis){
 	var txtHTML = "<img src='img/sceptre_chronique.png'/><p><strong>Victoire</strong> : Bravo ! Tu as gagné. Tu as permis à Yom de construire le sceptre chronique. Tu as sauvé l'unnivers. Tous les habitants de l'unnivers parlerons encore de toi dans 1000 ans.</p>";
-	afficherFin(txtHTML, "victoire");
+	afficherFin(txtHTML, "victoire", milis);
 }
 
 //Affiche le bloc de fin (echec ou victoire)
-function afficherFin(contenu, classe) {
+function afficherFin(contenu, classe, milis) {
 
-		contenu += "<p><small>Tu es arrivé à une fin du jeu. Ce jeu contien 9 fins dont une <strong>victoire</strong> et 8 <strong>game over</strong>. Cliquez sur Rejouer pour rejouer : <a href='#'onclick='javascript:location.reload();'>Rejouer.</a></small></p>"
+		contenu += "<hr/><p><small>Après "+ tempsLisible(milis) +", tu es arrivé à une des 9 fins du jeu. Clique sur Rejouer pour rejouer :</small> <a href='#'onclick='javascript:location.reload();'>Rejouer.</a></p>"
 
 		bloc = createDiv("");
 		bloc.addClass(classe);
@@ -426,6 +497,16 @@ function faire(actions, perso) {
 		var ressource = args.join(" ");
 		if (ressources[ressource]) ressources[ressource] += quantite;
 		else ressources[ressource] = quantite;
+		var cook = Cookies.get('ressources-decouvertes')
+		if (cook){
+			cook = JSON.parse(cook);
+			set = new Set(cook);
+			set.add(ressource);
+			cook = Array.from(set);
+		}
+		else cook = [ressource];
+		Cookies.set('ressources-decouvertes', cook)
+
 	}
 	function sub(args) {
 		var quantite = args.shift();
@@ -439,6 +520,15 @@ function faire(actions, perso) {
 		for (var i = 0; i < histoire[type].length; i++) {
 			if (histoire[type][i].idx == idx) histoire[type][i].actif = true;
 		}
+		var cook = Cookies.get('personnages-rencontres')
+		if (cook){
+			cook = JSON.parse(cook);
+			set = new Set(cook);
+			set.add(idx);
+			cook = Array.from(set);
+		}
+		else cook = [idx];
+		Cookies.set('personnages-rencontres', cook)
 	}
 	function close(args) {
 		var type = args.shift();
@@ -461,7 +551,17 @@ function faire(actions, perso) {
 		for (var i = 0; i < histoire.cycle.length; i++) {
 			histoire.cycle[i].actif = false;
 		}
-		afficherGameOver(args.join(" "))
+		var msg = args.join(" ");
+		var cook = Cookies.get('fins-explorees')
+		if (cook){
+			cook = JSON.parse(cook);
+			set = new Set(cook);
+			set.add(msg);
+			cook = Array.from(set);
+		}
+		else cook = [msg];
+		Cookies.set('fins-explorees', cook)
+		afficherGameOver(msg, new Date().getTime() - tempsAuDebut)
 	}
 	function win(args) {
 		for (var i = 0; i < histoire.perso.length; i++) {
@@ -470,7 +570,28 @@ function faire(actions, perso) {
 		for (var i = 0; i < histoire.cycle.length; i++) {
 			histoire.cycle[i].actif = false;
 		}
-		afficherVictoire()
+		var msg = "win"
+		var cook = Cookies.get('fins-explorees')
+		if (cook){
+			cook = JSON.parse(cook);
+			set = new Set(cook);
+			set.add(msg);
+			cook = Array.from(set);
+		}
+		else cook = [msg];
+		Cookies.set('fins-explorees', cook)
+
+		var temps = new Date().getTime() - tempsAuDebut;
+		cook = Cookies.get('meilleur-temps');
+		if(cook) {
+			cook = JSON.parse(cook);
+			if(temps < cook){
+				cook = temps;
+			}
+		} else cook = temps
+		cook = Cookies.set('meilleur-temps', cook);
+
+		afficherVictoire(temps)
 	}
 
 }
@@ -503,6 +624,9 @@ function verifier(condition){
 	else if (cle == "cycle"){
 		var cycle = histoire[cle][condition.shift()]
 		valeur1 = float(cycle.scenar[cycle.scenarIdx][condition.shift()]);
+	}
+	else if (cle == "START") {
+		return true;
 	}
 	else return null;
 
@@ -570,3 +694,8 @@ function cycles() {
 		}
 	}
 }
+
+
+// TRICHE
+
+function triche(n){var r=ressources;r["bâtons"]=r.citrons=r.chaussures=r.paires_de_chaussures=r.balles_de_ping_pong=r.diamants=r.boites_en_carton=n;actualiser();}

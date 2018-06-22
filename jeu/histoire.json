@@ -1,8 +1,9 @@
 {
 	"evenements": {
+		"START" : ["OPEN perso 0"],
 		"bâtons > 10" : ["OPEN perso 1"],
 		"chaussures > 2" : ["OPEN perso 2"],
-		"paires_de_chaussures = 1" : ["OPEN perso 3"],
+		"paires_de_chaussures >= 1" : ["OPEN perso 3"],
 		"bâtons > 100" : ["OPEN perso 4"],
 		"boites_en_carton > 1" : ["OPEN perso 5"],
 		"diamants > 0" : ["OPEN perso 6"],
@@ -18,7 +19,7 @@
 		{
 			"nom" : "Cou",
 			"idx" : 0,
-			"actif" : true,
+			"actif" : false,
 			"scenarIdx" : 0,
 			"scenar" : [
 				{
@@ -851,7 +852,7 @@
 					"idx" : 5,
 					"txt" : "Tu es prévenu !</br>Essaye de ne jamais avoir plus de 10000 citrons ou tu mourra.</br> Voilà... Tu as tout compris ?",
 					"oui" : ["GOTO 6"],
-					"non" : ["GOTO 7"]
+					"non" : ["GOTO 6"]
 				},
 				{
 					"idx" : 6,
